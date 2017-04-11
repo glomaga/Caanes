@@ -52,6 +52,7 @@ public class Animal {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
+	
 	public Animal(int id, String name, boolean neutered, LocalDate birth, String color, LocalDate deceased,
 			boolean status) {
 		super();
