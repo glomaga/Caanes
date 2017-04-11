@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.mpp.group.proj.model.Categories;
+import com.mpp.group.proj.model.Microchip;
 
 @Repository
 public class CategoryDaoImpl implements CategoryDao {
@@ -30,52 +31,57 @@ public class CategoryDaoImpl implements CategoryDao {
 		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 	}
 	
-	private SqlParameterSource getSqlParameterByModel(Categories categories){
+	private SqlParameterSource getSqlParameterByModel(Microchip microchip){
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
-		if(categories!=null){
-			paramSource.addValue("id", categories.getId());
-			paramSource.addValue("category_name", categories.getCategory_name());
+		if(microchip!=null){
+			paramSource.addValue("id", microchip.getId());
+			paramSource.addValue("animal", microchip.getAnimal());
+			paramSource.addValue("description", microchip.getDescription());
+			paramSource.addValue("brand", microchip.getBrand());
+			paramSource.addValue("implantdate", microchip.getImplantdate());
+			paramSource.addValue("implantSite", microchip.getImplantSite());
+			
 		}
 		return paramSource;
 	}
 	
-	private static final class CategoryMapper implements RowMapper<Categories>{
+	private static final class MicrochipMapper implements RowMapper<Microchip>{
 		
-		public Categories mapRow(ResultSet rs, int rowNum) throws SQLException{
-			Categories categories = new Categories();
-			categories.setId(rs.getInt("id"));
-			categories.setCategory_name(rs.getString("category_name"));
-			return categories;
+		public Microchip mapRow(ResultSet rs, int rowNum) throws SQLException{
+			Microchip microchip = new Microchip();
+			microchip.setId(rs.getInt("id"));
+			microchip.setCategory_name(rs.getString("category_name"));
+			return microchip;
 		}
 	}
 	
-	public List<Categories> listAllCategories() {
+	public List<Microchip> listAllMicrochip() {
 		String sql="select id, category_name from tbl_category order by id";
-		List<Categories> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new CategoryMapper());
+		List<Microchip> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new MicrochipMapper());
 		return list;
 	}
 
-	public void addCategory(Categories categories) {
+	public void addMicrochip(Microchip microchip) {
 		String sql = "insert into tbl_category(category_name)"
 				+ " values(:category_name)";
 		
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(categories));
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(microchip));
 	}
 
-	public void updateCategory(Categories categories) {
+	public void updateMicrochip(Microchip microchip) {
 		String sql = "update tbl_category set category_name =:category_name where id =:id";
 		
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(categories));
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(microchip));
 	}
 
-	public void deleteCategory(int id) {
+	public void deleteMicrochip(int id) {
 		String sql = "delete from tbl_category where id =:id";
 		
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Categories(id)));
 	}
 
-	public Categories findCategoryById(int id) {
+	public Microchip findMicrochipById(int id) {
 		String sql="select id, category_name from tbl_category where id = " +id;
 		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Categories(id)), new CategoryMapper());
 	}
