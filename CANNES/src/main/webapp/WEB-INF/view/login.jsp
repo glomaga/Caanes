@@ -1,5 +1,6 @@
 <%@ include file="common/header.jspf"%>
-<div align = "center" class="container">
+<div align = "center" class="container" style="margin:10% 10%">
+
 	<div class="details">
 		<h1>Authentication</h1>
 	</div>
@@ -52,4 +53,5 @@
 			value="${_csrf.token}" />
 	</form>
 </div>
+
 <%@ include file="common/footer.jspf"%>
