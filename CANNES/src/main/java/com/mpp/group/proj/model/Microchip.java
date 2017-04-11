@@ -8,7 +8,7 @@ public class Microchip {
 	private Animal animal;
 	private String description;
 	private String brand;
-	private LocalDate implantdate;
+	private LocalDate implantDate;
 	private ImplantSite implantSite;
 	
 	
@@ -18,13 +18,13 @@ public class Microchip {
 	}
 
 
-	public Microchip(int id ,Animal animal, String description, String brand, LocalDate implantdate, ImplantSite implantSite) {
+	public Microchip(int id ,Animal animal, String description, String brand, LocalDate implantDate, ImplantSite implantSite) {
 		super();
 		this.id= id;
 		this.animal = animal;
 		this.description = description;
 		this.brand = brand;
-		this.implantdate = implantdate;
+		this.implantDate = implantDate;
 		this.implantSite = implantSite;
 	}
 	
@@ -57,11 +57,11 @@ public class Microchip {
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-	public LocalDate getImplantdate() {
-		return implantdate;
+	public LocalDate getImplantDate() {
+		return implantDate;
 	}
-	public void setImplantdate(LocalDate implantdate) {
-		this.implantdate = implantdate;
+	public void setImplantDate(LocalDate implantDate) {
+		this.implantDate = implantDate;
 	}
 	public ImplantSite getImplantSite() {
 		return implantSite;

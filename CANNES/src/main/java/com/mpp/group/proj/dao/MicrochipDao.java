@@ -3,6 +3,7 @@ package com.mpp.group.proj.dao;
 import java.util.List;
 
 import com.mpp.group.proj.model.Categories;
+import com.mpp.group.proj.model.Microchip;
 
 public interface MicrochipDao {
 	
