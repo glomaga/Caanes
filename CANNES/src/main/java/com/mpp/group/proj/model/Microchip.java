@@ -1,6 +1,11 @@
 package com.mpp.group.proj.model;
 
+import java.time.LocalDate;
+
 public class Microchip {
-int a23 ;
+	private String description;
+	private String brand;
+	private LocalDate date;
+	
 
 }
