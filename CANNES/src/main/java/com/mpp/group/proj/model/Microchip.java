@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Microchip {
 	
-	private Animal animal;
+	//private Animal animal;
 	private String description;
 	private String brand;
 	private LocalDate implantdate;
