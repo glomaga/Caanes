@@ -1,6 +1,6 @@
 package com.mpp.group.proj.model;
 
 public class Microchip {
-int a2 ;
+int a23 ;
 
 }
