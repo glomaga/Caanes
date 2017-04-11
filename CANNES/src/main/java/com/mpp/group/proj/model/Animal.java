@@ -8,7 +8,8 @@ public class Animal {
 	private boolean neutered;
 	private LocalDate birth;
 	private String color;
-	
+	private LocalDate deceased;
+	private boolean status;
 	public int getId() {
 		return id;
 	}
@@ -39,6 +40,29 @@ public class Animal {
 	public void setColor(String color) {
 		this.color = color;
 	}
-		 
-
+	public LocalDate getDeceased() {
+		return deceased;
+	}
+	public void setDeceased(LocalDate deceased) {
+		this.deceased = deceased;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	public Animal(int id, String name, boolean neutered, LocalDate birth, String color, LocalDate deceased,
+			boolean status) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.neutered = neutered;
+		this.birth = birth;
+		this.color = color;
+		this.deceased = deceased;
+		this.status = status;
+	}
+	
+	
 }
