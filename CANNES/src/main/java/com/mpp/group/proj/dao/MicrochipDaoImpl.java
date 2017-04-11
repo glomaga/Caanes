@@ -13,8 +13,6 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
-import com.mpp.group.proj.dao.CategoryDaoImpl.MicrochipMapper;
-import com.mpp.group.proj.model.Categories;
 import com.mpp.group.proj.model.Microchip;
 
 public class MicrochipDaoImpl implements MicrochipDao {
@@ -35,7 +33,7 @@ public class MicrochipDaoImpl implements MicrochipDao {
 		
 		if(microchip!=null){
 			paramSource.addValue("id", microchip.getId());
-			paramSource.addValue("animal", microchip.getAnimal());
+			//paramSource.addValue("animal", microchip.getAnimal());
 			paramSource.addValue("description", microchip.getDescription());
 			paramSource.addValue("brand", microchip.getBrand());
 			paramSource.addValue("implantDate", microchip.getImplantDate());
@@ -49,18 +47,12 @@ public class MicrochipDaoImpl implements MicrochipDao {
 		
 		public Microchip mapRow(ResultSet rs, int rowNum) throws SQLException{
 			Microchip microchip = new Microchip();
-			
-			
 			microchip.setId(rs.getInt("id"));
-			microchip.setId(rs.getInt("animal"));
-			microchip.setId(rs.getInt("description"));
-			microchip.setId(rs.getInt("brand"));
-			microchip.setId(rs.getInt("implantdate"));
-			microchip.setId(rs.getInt("id"));
-			
-			
-			microchip.setId(rs.getInt("id"));
-			microchip.setCategory_name(rs.getString("category_name"));
+			//microchip.setAnimal(rs.getInt(columnLabel)"animal"));
+			microchip.setDescription(rs.getString("description"));
+			microchip.setBrand(rs.getString("brand"));
+			microchip.setImplantDate(rs.getDate("implantdate").toLocalDate());
+			//microchip.setImplantSite(rs.getString("implantSite"));
 			return microchip;
 		}
 	}
