@@ -4,5 +4,5 @@ public class Email {
 
 	Email(){}
 	
-	Email(int i){}
+	
 }
