@@ -5,7 +5,6 @@ import java.time.LocalDate;
 public class Microchip {
 	
 	private int id;
-	private Animal animal;
 	private String description;
 	private String brand;
 	private LocalDate implantDate;
@@ -16,12 +15,15 @@ public class Microchip {
 	public Microchip() {
 		super();
 	}
+	
+	public Microchip(int id){
+		this.id=id;
+	}
 
 
-	public Microchip(int id ,Animal animal, String description, String brand, LocalDate implantDate, ImplantSite implantSite) {
+	public Microchip(int id , String description, String brand, LocalDate implantDate, ImplantSite implantSite) {
 		super();
 		this.id= id;
-		this.animal = animal;
 		this.description = description;
 		this.brand = brand;
 		this.implantDate = implantDate;
@@ -38,13 +40,6 @@ public class Microchip {
 		this.id = id;
 	}
 
-
-	public Animal getAnimal() {
-		return animal;
-	}
-	public void setAnimal(Animal animal) {
-		this.animal = animal;
-	}
 	public String getDescription() {
 		return description;
 	}
@@ -69,10 +64,4 @@ public class Microchip {
 	public void setImplantSite(ImplantSite implantSite) {
 		this.implantSite = implantSite;
 	}
-
-	
-	
-	
-
-
 }
