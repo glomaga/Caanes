@@ -8,7 +8,7 @@
 	<form action="/login" method="post">
 
 		<div >
-			<table border="0">
+			<table>
 				<tr>
 					<td style="width:90px"><label>Username</label></td>
 					<td width="10px">:</td>

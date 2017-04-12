@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.mpp.group.proj.model.Categories;
-import com.mpp.group.proj.model.Microchip;
+
 
 @Repository
 public class CategoryDaoImpl implements CategoryDao {

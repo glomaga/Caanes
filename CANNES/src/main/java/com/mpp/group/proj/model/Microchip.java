@@ -1,27 +1,30 @@
 package com.mpp.group.proj.model;
 
-import java.time.LocalDate;
+
+import java.util.Date;
 
 public class Microchip {
 	
 	private int id;
-	private Animal animal;
 	private String description;
 	private String brand;
-	private LocalDate implantDate;
-	private ImplantSite implantSite;
+	private Date implantDate;
+	private int implantSite;
 	
 	
 	
 	public Microchip() {
 		super();
 	}
+	
+	public Microchip(int id){
+		this.id=id;
+	}
 
 
-	public Microchip(int id ,Animal animal, String description, String brand, LocalDate implantDate, ImplantSite implantSite) {
+	public Microchip(int id , String description, String brand, Date implantDate, int implantSite) {
 		super();
 		this.id= id;
-		this.animal = animal;
 		this.description = description;
 		this.brand = brand;
 		this.implantDate = implantDate;
@@ -38,13 +41,6 @@ public class Microchip {
 		this.id = id;
 	}
 
-
-	public Animal getAnimal() {
-		return animal;
-	}
-	public void setAnimal(Animal animal) {
-		this.animal = animal;
-	}
 	public String getDescription() {
 		return description;
 	}
@@ -57,22 +53,28 @@ public class Microchip {
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-	public LocalDate getImplantDate() {
+	public Date getImplantDate() {
+	//	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	//	dateFormat.format(implantDate);
 		return implantDate;
 	}
-	public void setImplantDate(LocalDate implantDate) {
+	public void setImplantDate(Date implantDate) {
+		// LocalDate today = LocalDate.now();
+		//this.implantDate = today;
 		this.implantDate = implantDate;
 	}
-	public ImplantSite getImplantSite() {
+	public int getImplantSite() {
 		return implantSite;
 	}
-	public void setImplantSite(ImplantSite implantSite) {
+	public void setImplantSite(int implantSite) {
 		this.implantSite = implantSite;
 	}
 
+	@Override
+	public String toString() {
+		return "Microchip [id=" + id + ", description=" + description + ", brand=" + brand + ", implantDate="
+				+ implantDate + ", implantSite=" + implantSite + "]";
+	}
 	
 	
-	
-
-
 }

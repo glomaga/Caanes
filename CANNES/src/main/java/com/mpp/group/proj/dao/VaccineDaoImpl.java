@@ -16,97 +16,103 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import com.mpp.group.proj.model.Microchip;
+import com.mpp.group.proj.model.Vaccine;
 
 @Repository
-public class MicrochipDaoImpl implements MicrochipDao {
-
+public class VaccineDaoImpl implements VaccineDao {
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
+	
 	@Autowired
 	DataSource dataSource;
 	
-
 	@Autowired
 	public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) 
 			throws DataAccessException{
 		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 	}
 	
-	private SqlParameterSource getSqlParameterByModel(Microchip microchip){
+	
+	private SqlParameterSource getSqlParameterByModel(Vaccine vaccine){
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
-		if(microchip!=null){
-			paramSource.addValue("id", microchip.getId());
-			paramSource.addValue("description", microchip.getDescription());
-			paramSource.addValue("brand", microchip.getBrand());
-			paramSource.addValue("implantDate", microchip.getImplantDate());
-			paramSource.addValue("implantSite", microchip.getImplantSite());
-			
+		if(vaccine!=null){
+			paramSource.addValue("id", vaccine.getId());
+			paramSource.addValue("animal", vaccine.getAnimal());
+			paramSource.addValue("date", vaccine.getDate());
+			paramSource.addValue("name", vaccine.getName());
+			paramSource.addValue("Batch", vaccine.getBatch());
+			paramSource.addValue("doctor", vaccine.getDoctor());
 		}
 		return paramSource;
 	}
 	
-	private static final class MicrochipMapper implements RowMapper<Microchip>{
-
+	private static final class VaccineMapper implements RowMapper<Vaccine>{
 		
-		
-		public Microchip mapRow(ResultSet rs, int rowNum) throws SQLException{
-
+		public Vaccine mapRow(ResultSet rs, int rowNum) throws SQLException{
 			 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			
-		
-			Microchip microchip = new Microchip();
-			microchip.setId(rs.getInt("mr_id"));
-			microchip.setDescription(rs.getString("mr_description"));
-			microchip.setBrand(rs.getString("mr_brand"));
+				
+			 
+			Vaccine vaccine = new Vaccine();
+			vaccine.setId(rs.getInt("va_id"));
+			vaccine.setAnimal(rs.getInt("an_id"));//animal
+			vaccine.setDoctor(rs.getInt("pr_id"));//doctor
 			try {
-				microchip.setImplantDate(format.parse(rs.getString("mr_date")));
+				vaccine.setDate(format.parse(rs.getString("va_date")));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}///aqui es localdate
-			//LocalDateTime.parse(s, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm")
-			microchip.setImplantSite(rs.getInt("im_id"));
-			return microchip;
+			
+			vaccine.setName(rs.getString("va_name"));
+			vaccine.setBatch(rs.getString("va_batch"));
+
+			
+			return vaccine;
 		}
 	}
 	
-	public List<Microchip> listAllMicrochip() {
-		//String sql="select id, category_name from tbl_category order by id";
+	
+	@Override
+	public List<Vaccine> listAllVaccine() {
 		String sql="SELECT mr_id,mr_description,im_id,mr_brand,mr_date FROM t_microchip order by mr_id";
-		List<Microchip> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new MicrochipMapper());
+		List<Vaccine> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new VaccineMapper());
 		return list;
 	}
 
-	public void addMicrochip(Microchip microchip) {
-		//String sql = "insert into tbl_category(category_name)"
-		//		+ " values(:category_name)";
+	@Override
+	public void addVaccine(Vaccine Vaccine) {
 
 		 String sql = "INSERT INTO t_microchip (mr_description,im_id,mr_brand)"
 				+ "VALUES (:description,:implantSite,:brand)";
 	
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(microchip));
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(Vaccine));
+	
 	}
 
-	public void updateMicrochip(Microchip microchip) {
+	@Override
+	public void updateVaccine(Vaccine Vaccine) {
+		// TODO Auto-generated method stub
 		//String sql = "update tbl_category set category_name =:category_name where id =:id";
 		String sql = "UPDATE  t_microchip SET mr_description = :description, im_id = :implantSite, mr_brand = :brand WHERE mr_id = :id;";
 
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(microchip));
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(Vaccine));
+	
 	}
 
-	public void deleteMicrochip(int id) {
+	@Override
+	public void deleteVaccine(int id) {
 		String sql = "delete from t_microchip where mr_id =:id";
 
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Microchip(id)));
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Vaccine(id)));
+		
 	}
 
-	public Microchip findMicrochipById(int id) {
+	@Override
+	public Vaccine findVaccineById(int id) {
 		//String sql="select id, category_name from tbl_category where id = " +id;
 		String sql="SELECT mr_id,mr_description,im_id,mr_brand,mr_date FROM t_microchip where mr_id=" +id;;
-		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Microchip(id)), new MicrochipMapper());
+		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Vaccine(id)), new VaccineMapper());
+	
 	}
-
 
 }
