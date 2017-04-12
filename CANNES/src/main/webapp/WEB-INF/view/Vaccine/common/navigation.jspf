@@ -12,6 +12,7 @@
 			<li><a href="/product/">Product</a></li>
 			<li><a href="/stocks/">Stocks</a></li>
 			<li><a href="/microchip/">Microchip</a></li>
+			<li><a href="/vaccine/">Vaccine</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<!-- <li><a><font color="blue">Username :  ${name}</font></a></li>  -->

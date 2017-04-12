@@ -5,11 +5,11 @@ import java.util.Date;
 public class Vaccine {
 
 private int id;
-private int animal;
+private int animal_id;
 private Date date;
 private String name;
 private String batch;
-private int doctor;
+private int doctor_id;
 
 
 public Vaccine() {
@@ -21,14 +21,14 @@ public Vaccine(int id) {
 }
 
 
-public Vaccine(int id, int animal,Date date, String name, String batch,int doctor) {
+public Vaccine(int id, int animal_id,Date date, String name, String batch,int doctor_id) {
 	super();
 	this.id=id;
-	this.animal=animal;
+	this.animal_id=animal_id;
 	this.date = date;
 	this.name = name;
 	this.batch = batch;
-	this.doctor= doctor;
+	this.doctor_id= doctor_id;
 }
 
 
@@ -73,24 +73,24 @@ public void setBatch(String batch) {
 }
 
 
-public int getAnimal() {
-	return animal;
+public int getAnimal_id() {
+	return animal_id;
 }
 
 
-public void setAnimal(int animal) {
-	this.animal = animal;
+public void setAnimal_id(int animal_id) {
+	this.animal_id = animal_id;
 }
-public int getDoctor() {
-	return doctor;
+public int getDoctor_id() {
+	return doctor_id;
 }
-public void setDoctor(int doctor) {
-	this.doctor = doctor;
+public void setDoctor_id(int doctor_id) {
+	this.doctor_id = doctor_id;
 }
 @Override
 public String toString() {
-	return "Vaccine [id=" + id + ", animal=" + animal + ", date=" + date + ", name=" + name + ", batch=" + batch
-			+ ", doctor=" + doctor + "]";
+	return "Vaccine [id=" + id + ", animal_id=" + animal_id + ", date=" + date + ", name=" + name + ", batch=" + batch
+			+ ", doctor_id=" + doctor_id + "]";
 }
 
 

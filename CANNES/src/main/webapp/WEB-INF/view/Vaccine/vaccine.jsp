@@ -11,25 +11,26 @@
 		<f:hidden path="id" />
 		<table style="width: 499px; height: 265px; ">
 			<tr>
-				<td>Description: </td>
-				<td style="width: 200px"><f:input path="description" />
+				<td style="width: 200px; ">Name Animal: </td>
+								<td>
+					<f:select id="animal_id" path="animal_id" onchange="myFunc(value)">
+						<option value="-1">Select Animal</option>
+						<f:options items="${AnimalList}" itemValue="id" itemLabel="animal"/>
+       				</f:select>
+                </td>
 					</tr>
 					<tr>
-				<td>Brand Name: </td>						
-				<td style="width: 355px"><f:input path="brand" />
+				<td style="width: 200px; ">Date: </td>						
+				<td style="width: 355px"><f:input path="date" />
 				</tr>
 				<tr>
-				<td>Implant Date: </td>
-				<td style="width: 200px"><f:input path="implantDate" />
+				<td style="width: 200px; ">Name Vaccine: </td>
+				<td style="width: 200px"><f:input path="name" />
 				</tr>
 				<tr>
-			<td>Implant Site: </td>
-			<td style="width: 200px">
-					<f:select id="implantSite" path="implantSite" onchange="myFunc(key)">
-						<option value="-1">Select implantSite</option>
-						<f:options items="${ImplantSiteList}" itemValue="value" itemLabel="key"/>
-       				</f:select>
-					</tr> 
+				<td style="width: 200px; ">Batch: </td>
+				<td style="width: 200px"><f:input path="batch" />
+				</tr>
 				<tr><td>
 				<button type="submit" class="btn btn-success">Save</button></td>
 				</tr>
@@ -39,29 +40,28 @@
 	<table class="table table-striped">
 		<tr>
 			<th>Id</th>
-			<th>Description</th>
-			<th>Brand</th>
-			<th>Implant Date</th>
-			<th>Implant Site</th>
+			<th>Animal</th>
+			<th>Date</th>
+			<th>Name</th>
+			<th>Batch</th>
+			<th>Doctor</th>
 			<th colspan="2"> Action</th>
 		</tr>
-		<c:forEach items="${listMicrochip}" var="microchip">
+		<c:forEach items="${listVaccione}" var="vaccine">
 			<tr>
-				<td>${microchip.id}</td>
-				<td>${microchip.description}</td>
-				<td>${microchip.brand}</td>
-				<td>${microchip.implantDate}</td>
-
-				
-				<td>${microchip.implantSite}</td>
-
+				<td>${vaccine.id}</td>
+				<td>${vaccine.Animal_id}</td>
+				<td>${vaccine.date}</td>
+				<td>${vaccine.name}</td>
+				<td>${vaccine.batch}</td>
+				<td>${vaccine.doctor}</td>
 				<td>
-					<spring:url value="/microchip/update?id=${microchip.id}" var="updateMicrochip" />
+					<spring:url value="/vaccine/update?id=${vaccine.id}" var="updateVaccine" />
 					<a type="button" class="btn btn-primary"
-						href="${updateMicrochip}">Update</a>
-					<spring:url value="/microchip/delete?id=${microchip.id}" var="deleteMicrochip" />
+						href="${updateVaccine}">Update</a>
+					<spring:url value="/vaccine/delete?id=${vaccine.id}" var="deleteVaccine" />
 					<a type="button" class="btn btn-warning"
-						href="${deleteMicrochip}">Delete</a>
+						href="${deleteVaccine}">Delete</a>
 				</td>
 			</tr>
 		</c:forEach>
@@ -69,7 +69,7 @@
 </div>
 <script type="text/javascript">
 	function myFunc() {
-    var  selectedValue= $("#key").val();
+    var  selectedValue= $("#animal_id").val();
     alert(selectedValue);
    }
 </script>
