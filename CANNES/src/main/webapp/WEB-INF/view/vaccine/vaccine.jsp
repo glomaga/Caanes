@@ -20,7 +20,13 @@
 				</td>	
 			</tr>
 			<tr>
-				<td>Birth Date : </td>
+				<td>Name Vaccine : </td>
+				<td style="width: 20px;padding:10px">
+					<f:input path="name" maxlength="10"/>
+				</td>
+			</tr>
+			<tr>
+				<td>Date : </td>
 				<td style="width: 20px;padding:10px">
 					<f:input path="date" maxlength="10" type = "date" />
 				</td>

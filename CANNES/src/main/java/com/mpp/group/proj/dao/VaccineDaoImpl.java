@@ -75,9 +75,8 @@ public class VaccineDaoImpl implements VaccineDao {
 
 	@Override
 	public void addVaccine(Vaccine Vaccine) {
-
-		 String sql = "INSERT INTO t_microchip (mr_description,im_id,mr_brand)"
-				+ "VALUES (:description,:implantSite,:brand)";
+		 String sql = "INSERT INTO t_vaccine (va_id,an_id,pr_id,va_date,va_name,va_batch)"
+				+ "VALUES (:id,:animal_id,:doctor_id,:date,:name,:batch)";
 	
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(Vaccine));
 	
