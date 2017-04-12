@@ -37,11 +37,11 @@ public class VaccineDaoImpl implements VaccineDao {
 		
 		if(vaccine!=null){
 			paramSource.addValue("id", vaccine.getId());
-			paramSource.addValue("animal", vaccine.getAnimal());
+			paramSource.addValue("animal", vaccine.getAnimal_id());
 			paramSource.addValue("date", vaccine.getDate());
 			paramSource.addValue("name", vaccine.getName());
 			paramSource.addValue("Batch", vaccine.getBatch());
-			paramSource.addValue("doctor", vaccine.getDoctor());
+			paramSource.addValue("doctor", vaccine.getDoctor_id());
 		}
 		return paramSource;
 	}
@@ -54,8 +54,8 @@ public class VaccineDaoImpl implements VaccineDao {
 			 
 			Vaccine vaccine = new Vaccine();
 			vaccine.setId(rs.getInt("va_id"));
-			vaccine.setAnimal(rs.getInt("an_id"));//animal
-			vaccine.setDoctor(rs.getInt("pr_id"));//doctor
+			vaccine.setAnimal_id(rs.getInt("an_id"));//animal
+			vaccine.setDoctor_id(rs.getInt("pr_id"));//doctor
 			try {
 				vaccine.setDate(format.parse(rs.getString("va_date")));
 			} catch (ParseException e) {
