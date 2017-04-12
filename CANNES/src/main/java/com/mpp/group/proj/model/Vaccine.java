@@ -69,7 +69,7 @@ public String getBatch() {
 
 
 public void setBatch(String batch) {
-	batch = batch;
+	this.batch = batch;
 }
 
 

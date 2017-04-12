@@ -1,6 +1,6 @@
 package com.mpp.group.proj.config;
 
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class GetCurrentUser {
 
 	private String currentUser = null;
-	private GetCurrentUser getCurrentUser;
+	//private GetCurrentUser getCurrentUser;
 	
 	public GetCurrentUser(){}
 	

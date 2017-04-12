@@ -30,8 +30,9 @@
 						<f:options items="${ImplantSiteList}" itemValue="value" itemLabel="key"/>
        				</f:select>
 					</tr>
-				<td><button type="submit" class="btn btn-success">Save</button></td>
-			</tr>
+				<tr><td>
+				<button type="submit" class="btn btn-success">Save</button></td>
+				</tr>
 		</table>
 	</form:form>
  
