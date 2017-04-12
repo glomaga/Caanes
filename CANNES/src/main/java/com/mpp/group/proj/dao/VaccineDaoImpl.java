@@ -35,6 +35,8 @@ public class VaccineDaoImpl implements VaccineDao {
 	private SqlParameterSource getSqlParameterByModel(Vaccine vaccine){
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
+
+		System.out.println(vaccine);	 
 		if(vaccine!=null){
 			paramSource.addValue("id", vaccine.getId());
 			paramSource.addValue("animal", vaccine.getAnimal_id());
@@ -49,20 +51,12 @@ public class VaccineDaoImpl implements VaccineDao {
 	private static final class VaccineMapper implements RowMapper<Vaccine>{
 		
 		public Vaccine mapRow(ResultSet rs, int rowNum) throws SQLException{
-			 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				
-			 
+
 			Vaccine vaccine = new Vaccine();
 			vaccine.setId(rs.getInt("va_id"));
 			vaccine.setAnimal_id(rs.getInt("an_id"));//animal
 			vaccine.setDoctor_id(rs.getInt("pr_id"));//doctor
-			try {
-				vaccine.setDate(format.parse(rs.getString("va_date")));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}///aqui es localdate
-			
+			vaccine.setDate(rs.getDate("va_date"));
 			vaccine.setName(rs.getString("va_name"));
 			vaccine.setBatch(rs.getString("va_batch"));
 
@@ -74,7 +68,7 @@ public class VaccineDaoImpl implements VaccineDao {
 	
 	@Override
 	public List<Vaccine> listAllVaccine() {
-		String sql="SELECT mr_id,mr_description,im_id,mr_brand,mr_date FROM t_microchip order by mr_id";
+		String sql="SELECT * FROM t_vaccine order by va_id";
 		List<Vaccine> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new VaccineMapper());
 		return list;
 	}
@@ -93,7 +87,7 @@ public class VaccineDaoImpl implements VaccineDao {
 	public void updateVaccine(Vaccine Vaccine) {
 		// TODO Auto-generated method stub
 		//String sql = "update tbl_category set category_name =:category_name where id =:id";
-		String sql = "UPDATE  t_microchip SET mr_description = :description, im_id = :implantSite, mr_brand = :brand WHERE mr_id = :id;";
+		String sql = "UPDATE  t_vaccine SET an_id = :animal_id, pr_id = :doctor_id, va_date = :date, va_name=:name, va_batch=:batch WHERE va_id = :id;";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(Vaccine));
 	
@@ -101,7 +95,7 @@ public class VaccineDaoImpl implements VaccineDao {
 
 	@Override
 	public void deleteVaccine(int id) {
-		String sql = "delete from t_microchip where mr_id =:id";
+		String sql = "delete from t_vaccine where va_id =:id";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Vaccine(id)));
 		
@@ -110,7 +104,7 @@ public class VaccineDaoImpl implements VaccineDao {
 	@Override
 	public Vaccine findVaccineById(int id) {
 		//String sql="select id, category_name from tbl_category where id = " +id;
-		String sql="SELECT mr_id,mr_description,im_id,mr_brand,mr_date FROM t_microchip where mr_id=" +id;;
+		String sql="SELECT * FROM t_vaccine where va_id=" +id;;
 		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Vaccine(id)), new VaccineMapper());
 	
 	}

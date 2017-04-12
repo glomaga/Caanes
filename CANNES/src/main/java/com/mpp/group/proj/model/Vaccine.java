@@ -1,6 +1,6 @@
 package com.mpp.group.proj.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Vaccine {
 
@@ -10,6 +10,7 @@ private Date date;
 private String name;
 private String batch;
 private int doctor_id;
+
 
 
 public Vaccine() {
@@ -30,7 +31,6 @@ public Vaccine(int id, int animal_id,Date date, String name, String batch,int do
 	this.batch = batch;
 	this.doctor_id= doctor_id;
 }
-
 
 public Date getDate() {
 	return date;
@@ -92,6 +92,7 @@ public String toString() {
 	return "Vaccine [id=" + id + ", animal_id=" + animal_id + ", date=" + date + ", name=" + name + ", batch=" + batch
 			+ ", doctor_id=" + doctor_id + "]";
 }
+
 
 
 

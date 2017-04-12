@@ -1,7 +1,7 @@
 package com.mpp.group.proj.model;
 
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Microchip {
 	
@@ -54,13 +54,10 @@ public class Microchip {
 		this.brand = brand;
 	}
 	public Date getImplantDate() {
-	//	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	//	dateFormat.format(implantDate);
 		return implantDate;
 	}
 	public void setImplantDate(Date implantDate) {
-		// LocalDate today = LocalDate.now();
-		//this.implantDate = today;
+
 		this.implantDate = implantDate;
 	}
 	public int getImplantSite() {

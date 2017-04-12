@@ -1,11 +1,10 @@
 package com.mpp.group.proj.controller;
 
-import java.time.LocalDate;
+
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,7 +35,7 @@ public class VaccineController {
 	
 	@RequestMapping(value="/", method=RequestMethod.POST)
 	
-	public ModelAndView saveVaccine(@ModelAttribute("id") Vaccine Vaccine, @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date ){
+	public ModelAndView saveVaccine(@ModelAttribute("id") Vaccine Vaccine){
 
 		 System.out.println(">TaskController doCreateTask " + Vaccine);
 		    

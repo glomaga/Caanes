@@ -36,6 +36,7 @@ public class MicrochipDaoImpl implements MicrochipDao {
 	private SqlParameterSource getSqlParameterByModel(Microchip microchip){
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
+		System.out.println(microchip);
 		if(microchip!=null){
 			paramSource.addValue("id", microchip.getId());
 			paramSource.addValue("description", microchip.getDescription());
@@ -49,24 +50,13 @@ public class MicrochipDaoImpl implements MicrochipDao {
 	
 	private static final class MicrochipMapper implements RowMapper<Microchip>{
 
-		
-		
 		public Microchip mapRow(ResultSet rs, int rowNum) throws SQLException{
 
-			 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			
-		
 			Microchip microchip = new Microchip();
 			microchip.setId(rs.getInt("mr_id"));
 			microchip.setDescription(rs.getString("mr_description"));
 			microchip.setBrand(rs.getString("mr_brand"));
-			try {
-				microchip.setImplantDate(format.parse(rs.getString("mr_date")));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}///aqui es localdate
-			//LocalDateTime.parse(s, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm")
+			microchip.setImplantDate(rs.getDate("mr_date"));
 			microchip.setImplantSite(rs.getInt("im_id"));
 			return microchip;
 		}
@@ -83,15 +73,15 @@ public class MicrochipDaoImpl implements MicrochipDao {
 		//String sql = "insert into tbl_category(category_name)"
 		//		+ " values(:category_name)";
 
-		 String sql = "INSERT INTO t_microchip (mr_description,im_id,mr_brand)"
-				+ "VALUES (:description,:implantSite,:brand)";
+		 String sql = "INSERT INTO t_microchip (mr_description,im_id,mr_brand,mr_date)"
+				+ "VALUES (:description,:implantSite,:brand,:implantDate)";
 	
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(microchip));
 	}
 
 	public void updateMicrochip(Microchip microchip) {
 		//String sql = "update tbl_category set category_name =:category_name where id =:id";
-		String sql = "UPDATE  t_microchip SET mr_description = :description, im_id = :implantSite, mr_brand = :brand WHERE mr_id = :id;";
+		String sql = "UPDATE  t_microchip SET mr_description = :description, im_id = :implantSite, mr_brand = :brand, mr_date = :implantDate WHERE mr_id = :id;";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(microchip));
 	}

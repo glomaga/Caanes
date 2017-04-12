@@ -1,7 +1,5 @@
 <%@ include file="common/header.jspf"%>
 <%@ include file="common/navigation.jspf"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="container">
 
@@ -20,7 +18,9 @@
 				</tr>
 				<tr>
 				<td>Implant Date: </td>
-				<td style="width: 200px"><f:input path="implantDate" />
+				<td style="width: 20px;padding:10px">
+					<f:input path="implantDate" type="date"/>
+				</td>
 				</tr>
 				<tr>
 			<td>Implant Site: </td>
@@ -51,8 +51,6 @@
 				<td>${microchip.description}</td>
 				<td>${microchip.brand}</td>
 				<td>${microchip.implantDate}</td>
-
-				
 				<td>${microchip.implantSite}</td>
 
 				<td>

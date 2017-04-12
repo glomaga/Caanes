@@ -1,13 +1,12 @@
 package com.mpp.group.proj.controller;
 
 
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,12 +45,8 @@ public class MicrochipController {
 	}
 	
 	@RequestMapping(value="/", method=RequestMethod.POST)
-	
-	public ModelAndView saveMicrochip(@ModelAttribute("id") Microchip microchip, @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date ){
-
-		 System.out.println(">TaskController doCreateTask " + microchip);
-		    System.err.println("Due Date:"+microchip.getImplantDate());
-		    
+	public ModelAndView saveMicrochip(@ModelAttribute("id") Microchip microchip ){
+    
 		if(microchip != null && microchip.getId() != 0){
 			//update
 			microchipService.updateMicrochip(microchip);
