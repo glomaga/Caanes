@@ -1,14 +1,15 @@
 package com.mpp.group.proj.model;
 
-import java.time.LocalDate;
+
+import java.util.Date;
 
 public class Microchip {
 	
 	private int id;
 	private String description;
 	private String brand;
-	private LocalDate implantDate;
-	private ImplantSite implantSite;
+	private Date implantDate;
+	private int implantSite;
 	
 	
 	
@@ -21,7 +22,7 @@ public class Microchip {
 	}
 
 
-	public Microchip(int id , String description, String brand, LocalDate implantDate, ImplantSite implantSite) {
+	public Microchip(int id , String description, String brand, Date implantDate, int implantSite) {
 		super();
 		this.id= id;
 		this.description = description;
@@ -52,16 +53,28 @@ public class Microchip {
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-	public LocalDate getImplantDate() {
+	public Date getImplantDate() {
+	//	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	//	dateFormat.format(implantDate);
 		return implantDate;
 	}
-	public void setImplantDate(LocalDate implantDate) {
+	public void setImplantDate(Date implantDate) {
+		// LocalDate today = LocalDate.now();
+		//this.implantDate = today;
 		this.implantDate = implantDate;
 	}
-	public ImplantSite getImplantSite() {
+	public int getImplantSite() {
 		return implantSite;
 	}
-	public void setImplantSite(ImplantSite implantSite) {
+	public void setImplantSite(int implantSite) {
 		this.implantSite = implantSite;
 	}
+
+	@Override
+	public String toString() {
+		return "Microchip [id=" + id + ", description=" + description + ", brand=" + brand + ", implantDate="
+				+ implantDate + ", implantSite=" + implantSite + "]";
+	}
+	
+	
 }

@@ -14,8 +14,8 @@ public class MicrochipServiceImp  implements MicrochipService{
 	MicrochipDao microchipDao;
 	
 	@Autowired
-	public void setMicrochipDao(MicrochipDao categoryDao){
-		this.microchipDao = categoryDao;
+	public void setMicrochipDao(MicrochipDao MicrochipDao){
+		this.microchipDao = MicrochipDao;
 	}
 
 	@Override

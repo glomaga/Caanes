@@ -5,9 +5,9 @@
 
 <div class="container">
 
-	<spring:url value="/microchip/" var="saveMicrochip" />
+	<spring:url value="/vaccine/" var="saveVaccine" />
 
-	<form:form modelAttribute="microchipForm" method="POST" action="${saveMicrochip}">
+	<form:form modelAttribute="vaccineForm" method="POST" action="${saveVaccine}">
 		<f:hidden path="id" />
 		<table style="width: 499px; height: 265px; ">
 			<tr>

@@ -2,6 +2,12 @@ package com.mpp.group.proj.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -20,10 +26,11 @@ import com.mpp.group.proj.model.Microchip;
 public class MicrochipDaoImpl implements MicrochipDao {
 
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	
+
 	@Autowired
 	DataSource dataSource;
 	
+
 	@Autowired
 	public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) 
 			throws DataAccessException{
@@ -45,14 +52,26 @@ public class MicrochipDaoImpl implements MicrochipDao {
 	}
 	
 	private static final class MicrochipMapper implements RowMapper<Microchip>{
+
+		
 		
 		public Microchip mapRow(ResultSet rs, int rowNum) throws SQLException{
+
+			 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
+		
 			Microchip microchip = new Microchip();
-			microchip.setId(rs.getInt("id"));
-			microchip.setDescription(rs.getString("description"));
-			microchip.setBrand(rs.getString("brand"));
-			microchip.setImplantDate(rs.getDate("implantdate").toLocalDate());
-			//microchip.setImplantSite(rs.getString("implantSite"));
+			microchip.setId(rs.getInt("mr_id"));
+			microchip.setDescription(rs.getString("mr_description"));
+			microchip.setBrand(rs.getString("mr_brand"));
+			try {
+				microchip.setImplantDate(format.parse(rs.getString("mr_date")));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}///aqui es localdate
+			//LocalDateTime.parse(s, DateTimeFormat.forPattern("YYYY-MM-dd HH:mm")
+			microchip.setImplantSite(rs.getInt("im_id"));
 			return microchip;
 		}
 	}
@@ -67,15 +86,16 @@ public class MicrochipDaoImpl implements MicrochipDao {
 	public void addMicrochip(Microchip microchip) {
 		//String sql = "insert into tbl_category(category_name)"
 		//		+ " values(:category_name)";
-		String sql = "INSERT INTO t_microchip (mr_description,im_id,mr_brand,mr_date)"
-				+ "+  VALUES (:description,:im_id,:brand,:implantdate)";
+
+		 String sql = "INSERT INTO t_microchip (mr_description,im_id,mr_brand)"
+				+ "VALUES (:description,:implantSite,:brand)";
 	
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(microchip));
 	}
 
 	public void updateMicrochip(Microchip microchip) {
 		//String sql = "update tbl_category set category_name =:category_name where id =:id";
-		String sql = "UPDATE  t_microchip SET mr_description = :description, im_id = :im_id, mr_brand = :brand,mr_date = :implantdate WHERE mr_id = :id;";
+		String sql = "UPDATE  t_microchip SET mr_description = :description, im_id = :implantSite, mr_brand = :brand WHERE mr_id = :id;";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(microchip));
 	}
