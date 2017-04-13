@@ -55,6 +55,7 @@ public class AnimalController {
 		List<Animal> list = animalService.listAllAnimal();
 		model.addAttribute("animalForm",animal);
 		model.addAttribute("listAnimal",list);
+		model.addAttribute("listStatus",Gender.values());
 		
 		return "animal/animal";
 	}
@@ -65,6 +66,7 @@ public class AnimalController {
 		List<Animal> list = animalService.listAllAnimal();
 		model.addAttribute("animalForm", animalService.findAnimalById(id));
 		model.addAttribute("listAnimal",list);
+		model.addAttribute("listStatus",Gender.values());
 		
 		return "animal/animal";
 	}
