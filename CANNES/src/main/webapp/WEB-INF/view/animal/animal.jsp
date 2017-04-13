@@ -32,12 +32,8 @@
 			</tr>
 			<tr>
 				<td>Is Neuter : </td>
-				<td>
-					<f:select path="neutered" style="margin:10px">
-						<option value="1">Yes</option>
-						<option value="0">No</option>
-						<!--<f:options items="${categoryList}" itemValue="id" itemLabel="category_name"/>-->
-	       			</f:select> 
+				<td style="padding:10px;">
+					<f:checkbox path="neutered" />
        			</td>		
 			</tr>
 			<tr>
@@ -55,18 +51,14 @@
 			<tr>
 				<td>Deceased : </td>
 				<td style="width: 20px;padding:10px">
-					<f:input path="date2" maxlength="10" type="date"  />
+					<f:input path="deceased" maxlength="10" type="date"  />
 				</td>
 			</tr>
 			<tr>
 				<td>Is Active : </td>
-				<td>
-					<f:select path="status" style="margin:10px">
-						<option value="1">Yes</option>
-						<option value="0">No</option>
-						<!--<f:options items="${categoryList}" itemValue="id" itemLabel="category_name"/>-->
-	       			</f:select> 
-       			</td>		
+				<td style="padding:10px;">
+					<f:checkbox path="status" />
+       			</td>			
 			</tr>
 			<tr>		
 					
