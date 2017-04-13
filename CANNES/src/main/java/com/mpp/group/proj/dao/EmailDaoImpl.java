@@ -67,38 +67,30 @@ public class EmailDaoImpl implements EmailDao {
 	}
 
 	@Override
-	public void addEmail(Email email) {
-		
+	public void addEmail(Email email) {		
 		String sql = "insert into t_email(em_email,ph_primary) values(:em_email,:ph_primary)";						
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(email,false));
-		
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(email,false));		
 	}
 
 	@Override
-	public void updateEmail(Email email) {
-		
+	public void updateEmail(Email email) {		
 		String sql = "update t_email set em_email =:em_email,"
 				+ " ph_primary =:ph_primary"
 				+ " where em_id =:em_id";
 		
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(email,false));
-		
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(email,false));		
 	}
 
 	@Override
-	public void deleteEmail(int id) {
-		
+	public void deleteEmail(int id) {		
 		String sql = "delete from t_email where em_id =:em_id";		
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Email(id),true));
-		
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Email(id),true));		
 	}
 
 	@Override
-	public Email findEmailById(int id) {
-		
+	public Email findEmailById(int id) {		
 		String sql="select * from t_email where em_id =" +id ;
-		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Email(id),true), new EmailMapper());
-		
+		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Email(id),true), new EmailMapper());		
 	}
 
 }
