@@ -22,7 +22,7 @@
 					<f:select path="gender" style="margin:10px">
 					    
 				        <c:forEach items="${listStatus}" var="option">
-				                <option value="${option}">
+				                <option value="${option}" ${option == selectedGender ? 'selected="selected"' : ''}>
 				                    <c:out value="${option}"></c:out>
 				                </option>
 				        </c:forEach>

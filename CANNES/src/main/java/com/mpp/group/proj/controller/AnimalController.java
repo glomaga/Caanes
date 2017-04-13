@@ -48,7 +48,7 @@ public class AnimalController {
 	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
-	public String delete(ModelMap model, @RequestParam int id) {
+	public String deleteAnimal(ModelMap model, @RequestParam int id) {
 		
 		animalService.deleteAnimal(id);
 		Animal animal = new Animal();
@@ -61,12 +61,14 @@ public class AnimalController {
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(ModelMap model, @RequestParam int id) {
+	public String updateAnimal(ModelMap model, @RequestParam int id) {
 		
 		List<Animal> list = animalService.listAllAnimal();
-		model.addAttribute("animalForm", animalService.findAnimalById(id));
+		Animal a = animalService.findAnimalById(id);
+		model.addAttribute("animalForm", a);
 		model.addAttribute("listAnimal",list);
 		model.addAttribute("listStatus",Gender.values());
+		model.addAttribute("selectedGender",a.getGender());
 		
 		return "animal/animal";
 	}
