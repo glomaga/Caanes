@@ -10,11 +10,11 @@
 		<table style="width: 499px; height: 265px; ">
 			<tr>
 				<td>Description: </td>
-				<td style="width: 200px"><f:input path="description" />
+				<td style="width: 200px"><f:input path="description" maxlength="30"  />
 					</tr>
 					<tr>
 				<td>Brand Name: </td>						
-				<td style="width: 355px"><f:input path="brand" />
+				<td style="width: 355px"><f:input path="brand" maxlength="30" />
 				</tr>
 				<tr>
 				<td>Implant Date: </td>

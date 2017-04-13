@@ -2,40 +2,49 @@ package com.mpp.group.proj.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mpp.group.proj.dao.DewormDao;
 import com.mpp.group.proj.model.Deworm;
 @Service
 public class DewormServiceImp implements DewormService{
-
+	DewormDao DewormDao;
+	
+	@Autowired
+	public void seDewormDao(DewormDao DewormDao){
+		this.DewormDao = DewormDao;
+	}
+	
 	@Override
 	public List<Deworm> listAllDeworm() {
-		// TODO Auto-generated method stub
-		return null;
+		return DewormDao.listAllDeworm();
 	}
 
 	@Override
 	public void addDeworm(Deworm Deworm) {
-		// TODO Auto-generated method stub
+		DewormDao.addDeworm(Deworm);
 		
 	}
 
 	@Override
 	public void updateDeworm(Deworm Deworm) {
-		// TODO Auto-generated method stub
+		DewormDao.updateDeworm(Deworm);
 		
 	}
 
 	@Override
 	public void deleteDeworm(int id) {
-		// TODO Auto-generated method stub
+		DewormDao.deleteDeworm(id);
+		
 		
 	}
 
 	@Override
 	public Deworm findDewormById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return DewormDao.findDewormById(id);
+	
 	}
 
 }

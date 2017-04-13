@@ -10,6 +10,7 @@ private Date date;
 private String name;
 private String batch;
 private int doctor_id;
+private int animal_id;
 
 
 
@@ -92,12 +93,11 @@ public String toString() {
 	return "Vaccine [id=" + id + ", animal_id=" + animal + ", date=" + date + ", name=" + name + ", batch=" + batch
 			+ ", doctor_id=" + doctor_id + "]";
 }
-
-
-
-
-
-
-
+public int getAnimal_id() {
+	return animal_id;
+}
+public void setAnimal_id(int animal_id) {
+	this.animal_id = animal_id;
+}
 
 }

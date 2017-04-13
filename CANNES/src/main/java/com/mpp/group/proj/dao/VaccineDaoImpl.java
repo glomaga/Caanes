@@ -2,8 +2,6 @@ package com.mpp.group.proj.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -18,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mpp.group.proj.model.Animal;
 import com.mpp.group.proj.model.Vaccine;
+import com.mpp.group.proj.service.AnimalService;
 
 @Repository
 public class VaccineDaoImpl implements VaccineDao {
@@ -27,42 +26,53 @@ public class VaccineDaoImpl implements VaccineDao {
 	DataSource dataSource;
 	
 	@Autowired
+	AnimalService AnimalService;
+	@Autowired
 	public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) 
 			throws DataAccessException{
 		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 	}
 	
 	
-	private SqlParameterSource getSqlParameterByModel(Vaccine vaccine){
+	private SqlParameterSource getSqlParameterByModel(Vaccine vaccine, boolean isById){
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
 		
-
-		System.out.println(vaccine);	 
 		if(vaccine!=null){
+			paramSource.addValue("va_id", vaccine.getId());
+			if(!isById)
+			{
 			System.out.println("interno");
-			paramSource.addValue("id", vaccine.getId());
-			paramSource.addValue("animal", vaccine.getAnimal().getId());
-			paramSource.addValue("date", vaccine.getDate());
-			paramSource.addValue("name", vaccine.getName());
-			paramSource.addValue("batch", vaccine.getBatch());
-			paramSource.addValue("doctor_id", vaccine.getDoctor_id());
+			paramSource.addValue("va_id", vaccine.getId());
+			//paramSource.addValue("an_id", vaccine.getAnimal().getId());
+			paramSource.addValue("an_id", vaccine.getAnimal_id());
+		//	paramSource.addValue("an_name", vaccine.getAnimal().getName());
+			paramSource.addValue("va_date", vaccine.getDate());
+			paramSource.addValue("va_name", vaccine.getName());
+			paramSource.addValue("va_batch", vaccine.getBatch());
+			paramSource.addValue("pr_id", vaccine.getDoctor_id());
+		}
 		}
 		return paramSource;
 	}
 	
 	private static final class VaccineMapper implements RowMapper<Vaccine>{
-		
+
 		public Vaccine mapRow(ResultSet rs, int rowNum) throws SQLException{
 
+			
 			Vaccine vaccine = new Vaccine();
 			vaccine.setId(rs.getInt("va_id"));
-			Animal animal= new Animal(rs.getInt("an_id"));
+			System.out.println("Animal ID "+ rs.getInt("an_id"));
+			Animal animal= new Animal();
+			
+			animal.setId(rs.getInt("an_id"));
+			animal.setName(rs.getString("an_name"));			
 			vaccine.setAnimal(animal);//animal
 			vaccine.setDoctor_id(rs.getInt("pr_id"));//doctor
 			vaccine.setDate(rs.getDate("va_date"));
 			vaccine.setName(rs.getString("va_name"));
 			vaccine.setBatch(rs.getString("va_batch"));
-
+			System.out.println(vaccine);
 			
 			return vaccine;
 		}
@@ -71,17 +81,28 @@ public class VaccineDaoImpl implements VaccineDao {
 	
 	@Override
 	public List<Vaccine> listAllVaccine() {
-		String sql="SELECT * FROM t_vaccine order by va_id";
-		List<Vaccine> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new VaccineMapper());
+		String sql="select "
+		+" t_vaccine.va_id,"
+		+"   t_vaccine.an_id,"
+		+"	t_animal.an_name,"
+		+"    t_vaccine.pr_id,"
+		+"    t_vaccine.va_date,"
+		+"    t_vaccine.va_name,"
+		+"    t_vaccine.va_batch"
+		+" from t_vaccine, t_animal where "
+		+" t_animal.an_id = t_vaccine.an_id "
+		+ " order by va_id";
+		
+		List<Vaccine> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null,false), new VaccineMapper());
 		return list;
 	}
 
 	@Override
 	public void addVaccine(Vaccine Vaccine) {
-		 String sql = "INSERT INTO t_vaccine (va_id,an_id,pr_id,va_date,va_name,va_batch)"
-				+ "VALUES (:id,:animal_id,:doctor_id,:date,:name,:batch)";
+		 String sql = "INSERT INTO t_vaccine (an_id,pr_id,va_date,va_name,va_batch)"
+				+ "VALUES (:an_id,:pr_id,:va_date,:va_name,:va_batch)";
 	
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(Vaccine));
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(Vaccine,false));
 	
 	}
 
@@ -89,9 +110,15 @@ public class VaccineDaoImpl implements VaccineDao {
 	public void updateVaccine(Vaccine Vaccine) {
 		// TODO Auto-generated method stub
 		//String sql = "update tbl_category set category_name =:category_name where id =:id";
-		String sql = "UPDATE  t_vaccine SET an_id = :animal_id, pr_id = :doctor_id, va_date = :date, va_name=:name, va_batch=:batch WHERE va_id = :id;";
+		String sql = "UPDATE  t_vaccine"
+				+" SET an_id = :an_id,"
+				+"pr_id = :pr_id, "
+				+ "va_date = :va_date, "
+				+"va_name=:va_name, "
+				+"va_batch=:va_batch "
+				+"WHERE va_id = :va_id;";
 
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(Vaccine));
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(Vaccine,false));
 	
 	}
 
@@ -99,18 +126,29 @@ public class VaccineDaoImpl implements VaccineDao {
 	public void deleteVaccine(int id) {
 		
 		
-		String sql = "delete from t_vaccine where va_id =:id";
-		System.out.println(sql);
+		String sql = "delete from t_vaccine where va_id =:va_id";
+		System.out.println("DELETE" +sql);
 		
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Vaccine(id)));
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Vaccine(id),true));
 		
 	}
 
 	@Override
 	public Vaccine findVaccineById(int id) {
 		//String sql="select id, category_name from tbl_category where id = " +id;
-		String sql="SELECT * FROM t_vaccine where va_id=" +id;;
-		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Vaccine(id)), new VaccineMapper());
+		String sql="select "
+		+" t_vaccine.va_id,"
+		+"   t_vaccine.an_id,"
+		+"	t_animal.an_name,"
+		+"    t_vaccine.pr_id,"
+		+"    t_vaccine.va_date,"
+		+"    t_vaccine.va_name,"
+		+"    t_vaccine.va_batch"
+		+" from t_vaccine, t_animal where "
+		+" t_animal.an_id = t_vaccine.an_id "
+		+ " and t_vaccine.va_id=" +id;
+		
+		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Vaccine(id),true), new VaccineMapper());
 	
 	}
 

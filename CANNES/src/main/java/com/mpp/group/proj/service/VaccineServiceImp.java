@@ -13,7 +13,7 @@ public class VaccineServiceImp implements VaccineService{
 	VaccineDao vaccineDao;
 	
 	@Autowired
-	public void setMicrochipDao(VaccineDao vaccineDao){
+	public void setVaccineDao(VaccineDao vaccineDao){
 		this.vaccineDao = vaccineDao;
 	}
 	@Override

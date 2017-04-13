@@ -4,9 +4,9 @@
 
 <div class="container">
 
-	<spring:url value="/vaccine/" var="saveVaccine" />
+	<spring:url value="/deworm/" var="saveDeworm" />
 
-	<form:form modelAttribute="vaccineForm" method="POST" action="${saveVaccine}">
+	<form:form modelAttribute="dewormForm" method="POST" action="${saveDeworm}">
 		<f:hidden path="id" />
 		<table>
 			<tr>
@@ -19,7 +19,7 @@
 				</td>	
 			</tr>
 			<tr>
-				<td>Name Vaccine : </td>
+				<td>Name Deworm : </td>
 				<td style="width: 20px;padding:10px">
 					<f:input path="name" maxlength="30"/>
 				</td>
@@ -28,12 +28,6 @@
 				<td>Date : </td>
 				<td style="width: 20px;padding:10px">
 					<f:input path="date" maxlength="10" type = "date" />
-				</td>
-			</tr>
-			<tr>
-				<td>Batch : </td>
-				<td style="width: 20px;padding:10px">
-					<f:input path="batch" maxlength="30" />
 				</td>
 			</tr>
 			<tr>
@@ -57,27 +51,25 @@
 			<th>ID</th>
 			<th>Animal</th>
 			<th>Date</th>
-			<th>Name Vaccine</th>
-			<th>Batch</th>
+			<th>Name Deworm</th>
 			<th>Doctor ID</th>
 			<th colspan="2"> Action</th>
 		</tr>
-		<c:forEach items="${listvaccine}" var="vaccine">
+		<c:forEach items="${listdeworm}" var="deworm">
 			<tr>
-				<td>${vaccine.id}</td>
-				<td>${vaccine.animal.getName()}</td>
-				<td>${vaccine.date}</td>
-				<td>${vaccine.name}</td>
-				<td>${vaccine.batch}</td>
-				<td>${vaccine.doctor_id}</td>
+				<td>${deworm.id}</td>
+				<td>${deworm.animal.getName()}</td>
+				<td>${deworm.date}</td>
+				<td>${deworm.name}</td>
+				<td>${deworm.doctor_id}</td>
 				
 				<td>
-					<spring:url value="/vaccine/update?id=${vaccine.id}" var="updateVaccine" />
+					<spring:url value="/deworm/update?id=${deworm.id}" var="updateDeworm" />
 					<a type="button" class="btn btn-primary"
-						href="${updateVaccine}">Update</a>
-					<spring:url value="/vaccine/delete?id=${vaccine.id}" var="deleteVaccine" />
+						href="${updateDeworm}">Update</a>
+					<spring:url value="/deworm/delete?id=${deworm.id}" var="deleteDeworm" />
 					<a type="button" class="btn btn-warning"
-						href="${deleteVaccine}">Delete</a>
+						href="${deleteDeworm}">Delete</a>
 				</td>
 			</tr>
 		</c:forEach>

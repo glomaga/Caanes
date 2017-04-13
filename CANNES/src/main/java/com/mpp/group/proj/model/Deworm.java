@@ -8,6 +8,9 @@ public class Deworm {
 	private Date date;
 	private String name;
 	private int doctor_id;
+	private int animal_id;
+	
+	
 	public Deworm(int id, Animal animal, Date date, String name, int doctor_id) {
 		super();
 		this.id = id;
@@ -58,6 +61,13 @@ public class Deworm {
 		return "Deworm [id=" + id + ", animal=" + animal + ", date=" + date + ", name=" + name + ", doctor_id="
 				+ doctor_id + "]";
 	}
+	public int getAnimal_id() {
+		return animal_id;
+	}
+	public void setAnimal_id(int animal_id) {
+		this.animal_id = animal_id;
+	}
 
+	
 	
 }
