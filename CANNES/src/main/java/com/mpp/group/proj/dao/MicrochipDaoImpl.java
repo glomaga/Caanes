@@ -16,6 +16,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.mpp.group.proj.model.Gender;
+import com.mpp.group.proj.model.ImplantSite;
 import com.mpp.group.proj.model.Microchip;
 
 @Repository
@@ -42,7 +44,7 @@ public class MicrochipDaoImpl implements MicrochipDao {
 			paramSource.addValue("description", microchip.getDescription());
 			paramSource.addValue("brand", microchip.getBrand());
 			paramSource.addValue("implantDate", microchip.getImplantDate());
-			paramSource.addValue("implantSite", microchip.getImplantSite());
+			paramSource.addValue("implantSite", microchip.getImplantSite().toString());
 			
 		}
 		return paramSource;
@@ -52,19 +54,22 @@ public class MicrochipDaoImpl implements MicrochipDao {
 
 		public Microchip mapRow(ResultSet rs, int rowNum) throws SQLException{
 
+		
 			Microchip microchip = new Microchip();
 			microchip.setId(rs.getInt("mr_id"));
 			microchip.setDescription(rs.getString("mr_description"));
 			microchip.setBrand(rs.getString("mr_brand"));
 			microchip.setImplantDate(rs.getDate("mr_date"));
-			microchip.setImplantSite(rs.getInt("im_id"));
+			microchip.setImplantSite(ImplantSite.valueOf(rs.getString("mr_implantsite")));
+			System.out.println(rs.getString("mr_implantsite"));
+			System.out.println(ImplantSite.valueOf(rs.getString("mr_implantsite")));
 			return microchip;
 		}
 	}
 	
 	public List<Microchip> listAllMicrochip() {
 		//String sql="select id, category_name from tbl_category order by id";
-		String sql="SELECT mr_id,mr_description,im_id,mr_brand,mr_date FROM t_microchip order by mr_id";
+		String sql="SELECT * from t_microchip order by mr_id";
 		List<Microchip> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new MicrochipMapper());
 		return list;
 	}
@@ -73,7 +78,7 @@ public class MicrochipDaoImpl implements MicrochipDao {
 		//String sql = "insert into tbl_category(category_name)"
 		//		+ " values(:category_name)";
 
-		 String sql = "INSERT INTO t_microchip (mr_description,im_id,mr_brand,mr_date)"
+		 String sql = "INSERT INTO t_microchip (mr_description,mr_implantsite,mr_brand,mr_date)"
 				+ "VALUES (:description,:implantSite,:brand,:implantDate)";
 	
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(microchip));
@@ -81,7 +86,7 @@ public class MicrochipDaoImpl implements MicrochipDao {
 
 	public void updateMicrochip(Microchip microchip) {
 		//String sql = "update tbl_category set category_name =:category_name where id =:id";
-		String sql = "UPDATE  t_microchip SET mr_description = :description, im_id = :implantSite, mr_brand = :brand, mr_date = :implantDate WHERE mr_id = :id;";
+		String sql = "UPDATE  t_microchip SET mr_description = :description, mr_implantsite = :implantSite, mr_brand = :brand, mr_date = :implantDate WHERE mr_id = :id;";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(microchip));
 	}
@@ -94,7 +99,7 @@ public class MicrochipDaoImpl implements MicrochipDao {
 
 	public Microchip findMicrochipById(int id) {
 		//String sql="select id, category_name from tbl_category where id = " +id;
-		String sql="SELECT mr_id,mr_description,im_id,mr_brand,mr_date FROM t_microchip where mr_id=" +id;;
+		String sql="SELECT mr_id,mr_description,mr_implantsite,mr_brand,mr_date FROM t_microchip where mr_id=" +id;
 		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Microchip(id)), new MicrochipMapper());
 	}
 

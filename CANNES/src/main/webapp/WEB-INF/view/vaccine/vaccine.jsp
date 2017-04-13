@@ -12,7 +12,7 @@
 			<tr>
 				<td>Animal: </td>
 				<td style="width: 200px;padding:10px">
-				<f:select path="animal_id" style="margin:10px">
+				<f:select path="animal" style="margin:10px">
 						<option value="1">1</option>
 						<option value="0">2</option>
 						<!--<f:options items="${categoryList}" itemValue="id" itemLabel="category_name"/>-->

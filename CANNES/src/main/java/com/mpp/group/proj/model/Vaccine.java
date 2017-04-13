@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Vaccine {
 
 private int id;
-private int animal_id;
+private Animal animal;
 private Date date;
 private String name;
 private String batch;
@@ -22,10 +22,10 @@ public Vaccine(int id) {
 }
 
 
-public Vaccine(int id, int animal_id,Date date, String name, String batch,int doctor_id) {
+public Vaccine(int id, Animal animal,Date date, String name, String batch,int doctor_id) {
 	super();
 	this.id=id;
-	this.animal_id=animal_id;
+	this.animal=animal;
 	this.date = date;
 	this.name = name;
 	this.batch = batch;
@@ -73,13 +73,13 @@ public void setBatch(String batch) {
 }
 
 
-public int getAnimal_id() {
-	return animal_id;
+public Animal getAnimal() {
+	return animal;
 }
 
 
-public void setAnimal_id(int animal_id) {
-	this.animal_id = animal_id;
+public void setAnimal(Animal animal) {
+	this.animal = animal;
 }
 public int getDoctor_id() {
 	return doctor_id;
@@ -89,7 +89,7 @@ public void setDoctor_id(int doctor_id) {
 }
 @Override
 public String toString() {
-	return "Vaccine [id=" + id + ", animal_id=" + animal_id + ", date=" + date + ", name=" + name + ", batch=" + batch
+	return "Vaccine [id=" + id + ", animal_id=" + animal + ", date=" + date + ", name=" + name + ", batch=" + batch
 			+ ", doctor_id=" + doctor_id + "]";
 }
 

@@ -2,8 +2,6 @@ package com.mpp.group.proj.controller;
 
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +31,10 @@ public class MicrochipController {
 		Microchip microchip = new Microchip();
 		
 		List<Microchip> list = microchipService.listAllMicrochip();
-		
-		List<ImplantSite> ImplantSiteList = new ArrayList<ImplantSite>( Arrays.asList(ImplantSite.values()));
-		
-		
+
 		model.addObject("microchipForm",microchip);
 		model.addObject("listMicrochip",list);
-		model.addObject("ImplantSiteList", ImplantSiteList);
+		model.addObject("ImplantSiteList",ImplantSite.values());
 		
 		return model;
 	}
@@ -62,11 +57,10 @@ public class MicrochipController {
 		microchipService.deleteMicrochip(id);
 		Microchip microchip = new Microchip();
 		List<Microchip> list = microchipService.listAllMicrochip();
-		List<ImplantSite> ImplantSiteList = new ArrayList<ImplantSite>( Arrays.asList(ImplantSite.values()));
 		
 		model.addAttribute("microchipForm",microchip);
 		model.addAttribute("listMicrochip",list);
-		model.addAttribute("ImplantSiteList", ImplantSiteList);
+		model.addAttribute("ImplantSiteList", ImplantSite.values());
 		
 		return "microchip/microchip";
 	}
@@ -75,11 +69,10 @@ public class MicrochipController {
 	public String updateMicrochip(ModelMap model, @RequestParam int id) {
 		
 		List<Microchip> list = microchipService.listAllMicrochip();
-		List<ImplantSite> ImplantSiteList = new ArrayList<ImplantSite>( Arrays.asList(ImplantSite.values()));
 		
 		model.addAttribute("microchipForm", microchipService.findMicrochipById(id));
 		model.addAttribute("listMicrochip",list);
-		model.addAttribute("ImplantSiteList", ImplantSiteList);
+		model.addAttribute("ImplantSiteList", ImplantSite.values());
 		return "microchip/microchip";
 	}
 	

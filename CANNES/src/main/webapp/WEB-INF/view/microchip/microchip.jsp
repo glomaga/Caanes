@@ -18,18 +18,22 @@
 				</tr>
 				<tr>
 				<td>Implant Date: </td>
-				<td style="width: 20px;padding:10px">
+				<td style="width: 355px">
 					<f:input path="implantDate" type="date"/>
 				</td>
 				</tr>
 				<tr>
-			<td>Implant Site: </td>
-			<td style="width: 200px">
-					<f:select id="implantSite" path="implantSite" onchange="myFunc(key)">
-						<option value="-1">Select implantSite</option>
-						<f:options items="${ImplantSiteList}" itemValue="value" itemLabel="key"/>
-       				</f:select>
-					</tr>
+					<td>Implant Site: </td>
+					<td style="width: 355px">
+						<f:select path="implantSite" >
+				        <c:forEach items="${ImplantSiteList}" var="option">
+				                <option value="${option}">
+				                    <c:out value="${option}"></c:out>
+				                </option>
+				        </c:forEach>
+					</f:select>
+					</td>
+				</tr>
 				<tr><td>
 				<button type="submit" class="btn btn-success">Save</button></td>
 				</tr>
@@ -65,13 +69,7 @@
 		</c:forEach>
 	</table>
 </div>
-<script type="text/javascript">
-	function myFunc() {
-    var  selectedValue= $("#key").val();
-    alert(selectedValue);
-   }
-</script>
-<script src="js/app-ajax.js" type="text/javascript"></script>
+
 
 <%@ include file="common/footer.jspf"%>
 

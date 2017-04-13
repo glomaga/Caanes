@@ -17,7 +17,11 @@ private ImplantSite(int value, String key) {
 	this.key = key;
 }
 
-public int getValue() {
+public String getValue(int value) {
+	return key;
+}
+
+public int getValue( ) {
 	return value;
 }
 

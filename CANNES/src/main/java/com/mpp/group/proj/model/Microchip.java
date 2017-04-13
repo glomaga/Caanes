@@ -9,7 +9,7 @@ public class Microchip {
 	private String description;
 	private String brand;
 	private Date implantDate;
-	private int implantSite;
+	private ImplantSite implantSite;
 	
 	
 	
@@ -22,7 +22,7 @@ public class Microchip {
 	}
 
 
-	public Microchip(int id , String description, String brand, Date implantDate, int implantSite) {
+	public Microchip(int id , String description, String brand, Date implantDate, ImplantSite implantSite) {
 		super();
 		this.id= id;
 		this.description = description;
@@ -60,10 +60,10 @@ public class Microchip {
 
 		this.implantDate = implantDate;
 	}
-	public int getImplantSite() {
+	public ImplantSite getImplantSite() {
 		return implantSite;
 	}
-	public void setImplantSite(int implantSite) {
+	public void setImplantSite(ImplantSite implantSite) {
 		this.implantSite = implantSite;
 	}
 

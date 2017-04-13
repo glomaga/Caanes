@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.mpp.group.proj.model.Animal;
 import com.mpp.group.proj.model.Vaccine;
 
 @Repository
@@ -38,8 +39,9 @@ public class VaccineDaoImpl implements VaccineDao {
 
 		System.out.println(vaccine);	 
 		if(vaccine!=null){
+			System.out.println("interno");
 			paramSource.addValue("id", vaccine.getId());
-			paramSource.addValue("animal_id", vaccine.getAnimal_id());
+			paramSource.addValue("animal", vaccine.getAnimal().getId());
 			paramSource.addValue("date", vaccine.getDate());
 			paramSource.addValue("name", vaccine.getName());
 			paramSource.addValue("batch", vaccine.getBatch());
@@ -54,7 +56,8 @@ public class VaccineDaoImpl implements VaccineDao {
 
 			Vaccine vaccine = new Vaccine();
 			vaccine.setId(rs.getInt("va_id"));
-			vaccine.setAnimal_id(rs.getInt("an_id"));//animal
+			Animal animal= new Animal(rs.getInt("an_id"));
+			vaccine.setAnimal(animal);//animal
 			vaccine.setDoctor_id(rs.getInt("pr_id"));//doctor
 			vaccine.setDate(rs.getDate("va_date"));
 			vaccine.setName(rs.getString("va_name"));

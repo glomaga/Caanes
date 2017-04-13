@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mpp.group.proj.model.Animal;
+import com.mpp.group.proj.model.Categories;
 import com.mpp.group.proj.model.Vaccine;
+import com.mpp.group.proj.service.AnimalService;
 import com.mpp.group.proj.service.VaccineService;
 
 @Controller
@@ -21,14 +24,20 @@ import com.mpp.group.proj.service.VaccineService;
 public class VaccineController {
 	@Autowired
 	VaccineService VaccineService;
-
+	
+	@Autowired
+	AnimalService AnimalService;
+	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView listVaccine(){
 		ModelAndView model = new ModelAndView("vaccine/vaccine");
 		Vaccine vaccine = new Vaccine();
+
+		List<Animal> animals = AnimalService.listAllAnimal();
 		List<Vaccine> list = VaccineService.listAllVaccine();
 		model.addObject("vaccineForm",vaccine);
 		model.addObject("listvaccine",list);
+		model.addObject("AnimalList",animals);
 		
 		return model;
 	}
@@ -65,9 +74,12 @@ public class VaccineController {
 	public String updateVaccine(ModelMap model, @RequestParam int id) {
 		
 		List<Vaccine> list = VaccineService.listAllVaccine();
-
+		List<Animal> animals = AnimalService.listAllAnimal();
+		
 		model.addAttribute("vaccineForm", VaccineService.findVaccineById(id));
 		model.addAttribute("listvaccine",list);
+		model.addAttribute("AnimalList",animals);
+		
 		return "vaccine/vaccine";
 	}
 	
