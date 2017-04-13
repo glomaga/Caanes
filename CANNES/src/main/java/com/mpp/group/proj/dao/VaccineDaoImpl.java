@@ -39,11 +39,11 @@ public class VaccineDaoImpl implements VaccineDao {
 		System.out.println(vaccine);	 
 		if(vaccine!=null){
 			paramSource.addValue("id", vaccine.getId());
-			paramSource.addValue("animal", vaccine.getAnimal_id());
+			paramSource.addValue("animal_id", vaccine.getAnimal_id());
 			paramSource.addValue("date", vaccine.getDate());
 			paramSource.addValue("name", vaccine.getName());
-			paramSource.addValue("Batch", vaccine.getBatch());
-			paramSource.addValue("doctor", vaccine.getDoctor_id());
+			paramSource.addValue("batch", vaccine.getBatch());
+			paramSource.addValue("doctor_id", vaccine.getDoctor_id());
 		}
 		return paramSource;
 	}
@@ -94,8 +94,11 @@ public class VaccineDaoImpl implements VaccineDao {
 
 	@Override
 	public void deleteVaccine(int id) {
+		
+		
 		String sql = "delete from t_vaccine where va_id =:id";
-
+		System.out.println(sql);
+		
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Vaccine(id)));
 		
 	}

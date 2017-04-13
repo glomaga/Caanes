@@ -63,7 +63,7 @@
 			<th>Doctor ID</th>
 			<th colspan="2"> Action</th>
 		</tr>
-		<c:forEach items="${listVaccine}" var="vaccine">
+		<c:forEach items="${listvaccine}" var="vaccine">
 			<tr>
 				<td>${vaccine.id}</td>
 				<td>${vaccine.animal_id}</td>
