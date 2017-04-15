@@ -1,23 +1,22 @@
 package com.mpp.group.proj.model;
-public enum PersonType {
 
-    OPTION_1(1, "DOCTOR"),
-    OPTION_2(2, "CUSTOMER"),
-    OPTION_3(3, "OTHERS");
+public enum Active {
+	
+	OPTION_1("Y", "ACTIVE"), OPTION_2("N", "IN-ACTIVE");
 
-	private int value;
+	private String value;
 	private String key;
 
-	private PersonType(int value, String key) {
+	private Active(String value, String key) {
 		this.value = value;
 		this.key = key;
 	}
 
-	public int getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 

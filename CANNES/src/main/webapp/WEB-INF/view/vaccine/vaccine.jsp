@@ -1,5 +1,5 @@
 <%@ include file="common/header.jspf"%>
-<%@ include file="common/navigation.jspf"%>
+<%@ include file="../common/navigation.jspf"%>
 
 
 <div class="container">
@@ -85,3 +85,13 @@
 </div>
 <%@ include file="common/footer.jspf"%>
 
+<script>
+$(document).ready(function () {
+    var url = window.location;
+    $('ul.nav > li').removeClass('active');
+    $('ul.nav a[href="'+ url +'"]').parent().addClass('active');
+    $('ul.nav a').filter(function() {
+         return this.href == url;
+    }).parent().addClass('active');
+});
+</script>

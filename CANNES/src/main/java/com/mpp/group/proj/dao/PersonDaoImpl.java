@@ -34,7 +34,7 @@ public class PersonDaoImpl implements PersonDao {
 	
 	private SqlParameterSource getSqlParameterByModel(Person person){
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-
+		
 		if(person!=null){
 			paramSource.addValue("pr_id", person.getId());
 			paramSource.addValue("pr_type", person.getType());
@@ -44,21 +44,39 @@ public class PersonDaoImpl implements PersonDao {
 			paramSource.addValue("pr_gender", person.getGender());
 			paramSource.addValue("pr_status", person.getStatus());
 		}
+		
 		return paramSource;
 	}
 	
+	
+	private SqlParameterSource getSqlParameterByModelSave(Person person){
+		MapSqlParameterSource paramSource = new MapSqlParameterSource();
+		
+		if(person!=null){
+			paramSource.addValue("pr_id", person.getId());
+			paramSource.addValue("pr_type", person.getType());
+			paramSource.addValue("pr_title", person.getTitle().toString());
+			paramSource.addValue("pr_lastname", person.getLastName());
+			paramSource.addValue("pr_firstname", person.getFirstName());
+			paramSource.addValue("pr_gender", person.getGender().toString());
+			paramSource.addValue("pr_status", person.getStatus().toString());
+		}
+		
+		return paramSource;
+	}
 	private static final class PersonMapper implements RowMapper<Person>{
 		
 		public Person mapRow(ResultSet rs, int rowNum) throws SQLException{
 			Person person = new Person();
+			
 			person.setId(rs.getInt("pr_id"));
 			person.setType(rs.getInt("pr_type"));
 			person.setTitle(Title.valueOf(rs.getString("pr_title")));
 			person.setLastName(rs.getString("pr_lastname"));
 			person.setFirstName(rs.getString("pr_firstname"));
 			person.setGender(Gender.valueOf(rs.getString("pr_gender")));
-			person.setStatus(rs.getString("pr_status").charAt(0));
-			
+			person.setStatus(rs.getString("pr_status"));
+
 			return person;
 		}
 	}
@@ -73,20 +91,21 @@ public class PersonDaoImpl implements PersonDao {
 
 	@Override
 	public void addPerson(Person person) {
-		String sql = "insert into t_person(pr_id, pr_type, pr_title, pr_lastname, "+
-				"pr_firstname, pr_gender, pr_status) values(:id, :type, :title, :lastName, "+
-				":firstName, :gender, :status)";
+
+		String sql = "insert into t_person(pr_id, pr_type, pr_title, "+
+				"pr_lastname, pr_firstname, pr_gender, pr_status) values(:pr_id, "+
+				":pr_type, :pr_title, :pr_lastname, :pr_firstname, :pr_gender, :pr_status)";
 		
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(person));
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModelSave(person));
 	}
 	
 	@Override
 	public void updatePerson(Person person) {
-		String sql = "update t_person set pr_id =:id, pr_type =:type, pr_title =:title, "+
-				"pr_lastname =:lastName, pr_firstname =:firstName, pr_gender =:gender, "+
-				"pr_status =:status where pr_id =:id";
+		String sql = "update t_person set pr_id =:pr_id, pr_type =:pr_type, pr_title =:pr_title, "+
+				"pr_lastname =:pr_lastname, pr_firstname =:pr_firstname, pr_gender =:pr_gender, "+
+				"pr_status =:pr_status where pr_id =:pr_id";
 		
-		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(person));
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModelSave(person));
 	}
 
 	@Override
@@ -98,8 +117,9 @@ public class PersonDaoImpl implements PersonDao {
 
 	@Override
 	public Person findPersonById(int id) {
-		String sql="select pr_id, pr_type, pr_title, pr_title, pr_lastname, "+
+		String sql="select pr_id, pr_type, pr_title, pr_lastname, "+
 				"pr_firstname, pr_gender, pr_status from t_person where pr_id = " +id;
+		
 		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Person(id)), new PersonMapper());
 	}
 

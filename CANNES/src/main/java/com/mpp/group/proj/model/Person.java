@@ -11,7 +11,7 @@ public class Person {
 	}
 	
     public Person(String lastName, String firstName, Title title, 
-    		char status, Gender gender, int type) {
+    		String status, Gender gender, int type) {
     	this.lastName = lastName;
     	this.firstName = firstName;
     	this.title = title;
@@ -25,7 +25,7 @@ public class Person {
     private Title title;
     private String firstName;
     private Gender gender;
-    private char status;
+    private String status;
     private int type;
     private List<Phone> listOfPhones = new ArrayList<>();
     private List<Location> listOfLocations = new ArrayList<>();
@@ -99,11 +99,11 @@ public class Person {
 		this.firstName = firstName;
 	}
 
-	public char getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(char status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -122,5 +122,10 @@ public class Person {
 		this.type = type;
 	}
     
-    
+	@Override
+    public String toString(){
+        return id + " " + type + " " + getTitle() + " " + firstName +" "+ lastName + 
+        		getGender() + " " + getStatus();
+        
+    }
 }

@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Customer extends Person {
 
-	public Customer(String firstName, String lastName, Title title, char status) {
+	public Customer(String firstName, String lastName, Title title, String status) {
 		this.lastName = lastName;
     	this.firstName = firstName;
     	this.title = title;
@@ -16,7 +16,7 @@ public class Customer extends Person {
     private String lastName;
     private String firstName;
     private Title title;
-    private char status;
+    private String status;
 	public int getId() {
 		return id;
 	}
@@ -41,10 +41,10 @@ public class Customer extends Person {
 	public void setTitle(Title title) {
 		this.title = title;
 	}
-	public char getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(char status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
