@@ -39,7 +39,7 @@
 			<tr>
 				<td>Birth Date : </td>
 				<td style="width: 20px;padding:10px">
-					<f:input path="birth" maxlength="10" type = "date" />
+					<f:input path="birth" maxlength="10" type = "date" style="width: 200px" />
 				</td>
 			</tr>
 			<tr>
@@ -51,7 +51,7 @@
 			<tr>
 				<td>Deceased : </td>
 				<td style="width: 20px;padding:10px">
-					<f:input path="deceased" maxlength="10" type="date"  />
+					<f:input path="deceased" maxlength="10" type="date" style="width: 200px" />
 				</td>
 			</tr>
 			<tr>
@@ -59,6 +59,33 @@
 				<td style="padding:10px;">
 					<f:checkbox path="status" />
        			</td>			
+			</tr>
+			<tr>
+				<td>Specie : </td>
+				<td style="width: 200px;padding:10px">
+					<f:select id="specie_id" path="specie_id" style="width: 200px">
+						<option value="-1">-- Select Specie --</option>
+						<f:options items="${listSpecies}" itemValue="id" itemLabel="description"/>
+       				</f:select>
+				</td>				
+			</tr>
+			<tr>
+				<td>Breed : </td>
+				<td style="width: 200px;padding:10px">
+					<f:select id="breed_id" path="breed_id" style="width: 200px">
+						<option value="-1">-- Select Breed --</option>
+						<f:options items="${listBreeds}" itemValue="id" itemLabel="description"/>
+       				</f:select>
+				</td>				
+			</tr>
+			<tr>
+				<td>Microchip : </td>
+				<td style="width: 200px;padding:10px">
+					<f:select id="microchip_id" path="microchip_id" style="width: 200px">
+						<option value="-1">-- Select Microchip --</option>
+						<f:options items="${listMicrochips}" itemValue="id" itemLabel="description"/>
+       				</f:select>
+				</td>				
 			</tr>
 			<tr>		
 					
@@ -79,6 +106,10 @@
 			<th>Is Neutered</th>
 			<th>Birth Date</th>
 			<th>Deceased</th>
+			<th>Color</th>
+			<th>Specie</th>
+			<th>Breed</th>
+			<th>Microchip</th>
 			<th>Is Active</th>
 			<th colspan="2"> Action</th>
 		</tr>
@@ -90,7 +121,11 @@
 				<td>${animal.neutered}</td>
 				<td>${animal.birth}</td>
 				<td>${animal.deceased}</td>
-				<td>${animal.status}</td>
+				<td>${animal.color}</td>
+				<td>${animal.specie.description}</td>
+				<td>${animal.breed.description}</td>
+				<td>${animal.microchip.description}</td>
+				<td>${animal.status}</td>				
 				
 				<td>
 					<spring:url value="/animal/update?id=${animal.id}" var="updateAnimal" />

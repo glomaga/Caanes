@@ -21,7 +21,11 @@ public class Microchip {
 		this.id=id;
 	}
 
-
+	public Microchip(int id,String description){
+		this.id=id;
+		this.description = description;
+	}
+	
 	public Microchip(int id , String description, String brand, Date implantDate, ImplantSite implantSite) {
 		super();
 		this.id= id;

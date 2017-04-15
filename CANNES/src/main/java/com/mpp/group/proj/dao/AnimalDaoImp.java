@@ -43,6 +43,11 @@ public class AnimalDaoImp implements AnimalDao {
 				paramSource.addValue("an_color", animal.getColor());
 				paramSource.addValue("an_deceased", animal.getDeceased());
 				paramSource.addValue("an_status", (animal.isStatus()?1:0));
+				//Associations
+				paramSource.addValue("sp_id", animal.getSpecie_id());
+				paramSource.addValue("br_id", animal.getBreed_id());
+				paramSource.addValue("mr_id", animal.getMicrochip_id()	);
+				
 			}
 			
 		}
@@ -62,6 +67,10 @@ public class AnimalDaoImp implements AnimalDao {
 			animal.setColor(rs.getString("an_color"));
 			animal.setDeceased(rs.getDate("an_deceased"));
 			animal.setStatus(rs.getBoolean("an_status"));
+			//associations
+			animal.setSpecie(new Specie(rs.getInt("sp_id"),rs.getString("sp_description")));
+			animal.setBreed(new Breed(rs.getInt("br_id"),rs.getString("br_description")));
+			animal.setMicrochip(new Microchip(rs.getInt("mr_id"),rs.getString("mr_description")));
 				
 			return animal;
 		}
@@ -71,7 +80,10 @@ public class AnimalDaoImp implements AnimalDao {
 	@Override
 	public List<Animal> listAllAnimal() {
 		
-		String sql="SELECT * FROM t_animal";
+		String sql="select t_animal.*,mr_description,br_description,sp_description from t_animal "
+				+ "inner join t_specie on t_specie.sp_id = t_animal.sp_id "
+				+ "inner join t_breed on t_breed.br_id = t_animal.br_id "
+				+ "inner join t_microchip on t_microchip.mr_id = t_animal.mr_id";
 		List<Animal> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null,false), new AnimalMapper());
 		return list;
 		
@@ -81,8 +93,8 @@ public class AnimalDaoImp implements AnimalDao {
 	public void addAnimal(Animal animal) {
 		
 		String sql = "insert into t_animal(an_name,an_gender,an_neuter,an_birth,an_color"
-				+ ",an_deceased,an_status) values(:an_name,:an_gender,:an_neuter,:an_birth,:an_color"
-				+ ",:an_deceased,:an_status)";
+				+ ",an_deceased,an_status,sp_id,br_id,mr_id) values(:an_name,:an_gender,:an_neuter,:an_birth,:an_color"
+				+ ",:an_deceased,:an_status,:sp_id,:br_id,:mr_id)";
 						
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(animal,false));
 		
@@ -97,7 +109,10 @@ public class AnimalDaoImp implements AnimalDao {
 				+ " an_birth =:an_birth,"
 				+ " an_color =:an_color,"
 				+ " an_deceased =:an_deceased,"
-				+ " an_status =:an_status"
+				+ " an_status =:an_status,"
+				+ " sp_id =:sp_id,"
+				+ " br_id =:br_id,"
+				+ " mr_id =:mr_id"
 				+ " where an_id =:an_id";
 		
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(animal,false));
@@ -114,7 +129,11 @@ public class AnimalDaoImp implements AnimalDao {
 
 	@Override
 	public Animal findAnimalById(int id) {
-		String sql="select * from t_animal where an_id =" +id ;
+		String sql="select t_animal.*,mr_description,br_description,sp_description from t_animal "
+				+ "inner join t_specie on t_specie.sp_id = t_animal.sp_id "
+				+ "inner join t_breed on t_breed.br_id = t_animal.br_id "
+				+ "inner join t_microchip on t_microchip.mr_id = t_animal.mr_id "
+				+ "where an_id =" +id ;
 		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Animal(id),true), new AnimalMapper());
 	}
 

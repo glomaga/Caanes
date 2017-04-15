@@ -8,14 +8,17 @@ public class Animal {
 	private boolean neutered;
 	private Date birth;
 	private String color;
+	private Specie specie;
+	private Breed breed;
+	private Microchip microchip;
 	private Date deceased;
-	private boolean status;
-	private String specie;
-	private String breed;
+	private boolean status;	
 	private Gender gender;
 	
-	private String date1;
-	private String date2;
+	private int specie_id;	
+	private int breed_id;
+	private int microchip_id;
+		
 	
 	public Gender getGender() {
 		return gender;
@@ -65,25 +68,51 @@ public class Animal {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public String getSpecie() {
+	public Specie getSpecie() {
 		return specie;
 	}
-	public void setSpecie(String specie) {
+	public void setSpecie(Specie specie) {
 		this.specie = specie;
+		this.specie_id = specie.getId();
 	}
-	public String getBreed() {
+	public Breed getBreed() {
 		return breed;
 	}
-	public void setBreed(String breed) {
+	public void setBreed(Breed breed) {
 		this.breed = breed;
+		this.breed_id = breed.getId();
 	}
-	
+	public Microchip getMicrochip() {
+		return microchip;
+	}
+	public void setMicrochip(Microchip microchip) {
+		this.microchip = microchip;
+		this.microchip_id = microchip.getId();
+	}
+	public int getSpecie_id() {
+		return specie_id;
+	}
+	public void setSpecie_id(int specie_id) {
+		this.specie_id = specie_id;
+	}
+	public int getBreed_id() {
+		return breed_id;
+	}
+	public void setBreed_id(int breed_id) {
+		this.breed_id = breed_id;
+	}
+	public int getMicrochip_id() {
+		return microchip_id;
+	}
+	public void setMicrochip_id(int microchip_id) {
+		this.microchip_id = microchip_id;
+	}
 	public Animal(){}
 	
 	public Animal(int id){this.id = id;}
 	
 	public Animal(int id, String name, boolean neutered, Date birth, String color, Date deceased,
-			boolean status, String specie, String breed) {
+			boolean status) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -92,22 +121,9 @@ public class Animal {
 		this.color = color;
 		this.deceased = deceased;
 		this.status = status;
-		this.specie = specie;
-		this.breed = breed;
+		
 	}
 	
-	public String getDate1() {
-		return date1;
-	}
-	public void setDate1(String date1) {
-		this.date1 = date1;
-	}
-	public String getDate2() {
-		return date2;
-	}
-	public void setDate2(String date2) {
-		this.date2 = date2;
-	}
 	
 	public String toString()
 	{
@@ -120,9 +136,9 @@ public class Animal {
 		str += ", deceased = " + this.deceased;
 		str += ", status = " + this.status;
 		str += ", gender = " + this.gender;
-		str += ", date1 = " + this.date1;
-		str += ", date2 = " + this.date2;
-		str += ", breed = " + this.breed + "]";
+		str += ", specie = " + this.specie.getId();
+		str += ", microchip = " + this.microchip.getId();
+		str += ", breed = " + this.breed.getId() + "]";
 		return str;
 	}
 	
