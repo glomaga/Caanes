@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mpp.group.proj.model.Animal;
-import com.mpp.group.proj.model.Categories;
+import com.mpp.group.proj.model.Person;
 import com.mpp.group.proj.model.Vaccine;
 import com.mpp.group.proj.service.AnimalService;
 import com.mpp.group.proj.service.VaccineService;
+import com.mpp.group.proj.service.PersonService;
 
 @Controller
 @RequestMapping(value="/vaccine")
@@ -28,6 +29,9 @@ public class VaccineController {
 	@Autowired
 	AnimalService AnimalService;
 	
+	@Autowired
+	PersonService PersonService; 
+	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView listVaccine(){
 		ModelAndView model = new ModelAndView("vaccine/vaccine");
@@ -35,9 +39,12 @@ public class VaccineController {
 
 		List<Animal> animals = AnimalService.listAllAnimal();
 		List<Vaccine> list = VaccineService.listAllVaccine();
+		List<Person> doctors = PersonService.listAllDoctor();
+		
 		model.addObject("vaccineForm",vaccine);
 		model.addObject("listvaccine",list);
 		model.addObject("AnimalList",animals);
+		model.addObject("DoctorList",doctors);
 		
 		return model;
 	}
@@ -46,7 +53,7 @@ public class VaccineController {
 	
 	public ModelAndView saveVaccine(@ModelAttribute("id") Vaccine Vaccine){
 
-		 System.out.println(">TaskController doCreateTask " + Vaccine);
+		// System.out.println(">TaskController doCreateTask " + Vaccine);
 		    
 		if(Vaccine != null && Vaccine.getId() != 0){
 			//update
@@ -75,10 +82,14 @@ public class VaccineController {
 		
 		List<Vaccine> list = VaccineService.listAllVaccine();
 		List<Animal> animals = AnimalService.listAllAnimal();
+		List<Person> doctors = PersonService.listAllDoctor();
 		
-		model.addAttribute("vaccineForm", VaccineService.findVaccineById(id));
+		Vaccine a = VaccineService.findVaccineById(id);
+		
+		model.addAttribute("vaccineForm", a);
 		model.addAttribute("listvaccine",list);
 		model.addAttribute("AnimalList",animals);
+		model.addAttribute("DoctorList",doctors);
 		
 		return "vaccine/vaccine";
 	}

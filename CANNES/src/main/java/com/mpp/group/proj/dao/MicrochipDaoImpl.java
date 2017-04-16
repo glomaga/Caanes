@@ -49,7 +49,7 @@ public class MicrochipDaoImpl implements MicrochipDao {
 				paramSource.addValue("mr_implantsite", microchip.getImplantSite().toString());
 			}
 		}
-		System.out.println(microchip);
+		//System.out.println(microchip);
 		return paramSource;
 	}
 	
@@ -64,8 +64,8 @@ public class MicrochipDaoImpl implements MicrochipDao {
 			microchip.setBrand(rs.getString("mr_brand"));
 			microchip.setImplantDate(rs.getDate("mr_date"));
 			microchip.setImplantSite(ImplantSite.valueOf(rs.getString("mr_implantsite")));
-			System.out.println(rs.getString("mr_implantsite"));
-			System.out.println(ImplantSite.valueOf(rs.getString("mr_implantsite")));
+		//	System.out.println(rs.getString("mr_implantsite"));
+		//	System.out.println(ImplantSite.valueOf(rs.getString("mr_implantsite")));
 			return microchip;
 		}
 	}

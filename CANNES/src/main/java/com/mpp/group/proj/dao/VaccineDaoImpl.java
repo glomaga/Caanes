@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.mpp.group.proj.model.Animal;
+import com.mpp.group.proj.model.Person;
 import com.mpp.group.proj.model.Vaccine;
 import com.mpp.group.proj.service.AnimalService;
 
@@ -41,11 +42,9 @@ public class VaccineDaoImpl implements VaccineDao {
 			paramSource.addValue("va_id", vaccine.getId());
 			if(!isById)
 			{
-			System.out.println("interno");
+			//System.out.println("interno");
 			paramSource.addValue("va_id", vaccine.getId());
-			//paramSource.addValue("an_id", vaccine.getAnimal().getId());
 			paramSource.addValue("an_id", vaccine.getAnimal_id());
-		//	paramSource.addValue("an_name", vaccine.getAnimal().getName());
 			paramSource.addValue("va_date", vaccine.getDate());
 			paramSource.addValue("va_name", vaccine.getName());
 			paramSource.addValue("va_batch", vaccine.getBatch());
@@ -59,20 +58,26 @@ public class VaccineDaoImpl implements VaccineDao {
 
 		public Vaccine mapRow(ResultSet rs, int rowNum) throws SQLException{
 
-			
 			Vaccine vaccine = new Vaccine();
 			vaccine.setId(rs.getInt("va_id"));
-			System.out.println("Animal ID "+ rs.getInt("an_id"));
+			//System.out.println("Animal ID "+ rs.getInt("an_id"));
 			Animal animal= new Animal();
+			
+			//System.out.println("Person ID "+ rs.getInt("pr_id"));
+			Person doctor= new Person();
 			
 			animal.setId(rs.getInt("an_id"));
 			animal.setName(rs.getString("an_name"));			
 			vaccine.setAnimal(animal);//animal
-			vaccine.setDoctor_id(rs.getInt("pr_id"));//doctor
+			
+			doctor.setId(rs.getInt("pr_id"));
+			doctor.setLastName(rs.getString("pr_lastname"));
+			vaccine.setDoctor(doctor);//doctor
+			//vaccine.setDoctor_id(rs.getInt("pr_id"));//doctor
 			vaccine.setDate(rs.getDate("va_date"));
 			vaccine.setName(rs.getString("va_name"));
 			vaccine.setBatch(rs.getString("va_batch"));
-			System.out.println(vaccine);
+			//System.out.println(vaccine);
 			
 			return vaccine;
 		}
@@ -88,9 +93,11 @@ public class VaccineDaoImpl implements VaccineDao {
 		+"    t_vaccine.pr_id,"
 		+"    t_vaccine.va_date,"
 		+"    t_vaccine.va_name,"
-		+"    t_vaccine.va_batch"
-		+" from t_vaccine, t_animal where "
-		+" t_animal.an_id = t_vaccine.an_id "
+		+"    t_vaccine.va_batch,"
+		+"    t_person.pr_lastname"
+		+" from t_vaccine, t_animal, t_person where "
+		+" t_animal.an_id = t_vaccine.an_id and "
+		+" t_person.pr_id = t_vaccine.pr_id "
 		+ " order by va_id";
 		
 		List<Vaccine> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null,false), new VaccineMapper());
@@ -127,7 +134,7 @@ public class VaccineDaoImpl implements VaccineDao {
 		
 		
 		String sql = "delete from t_vaccine where va_id =:va_id";
-		System.out.println("DELETE" +sql);
+		//System.out.println("DELETE" +sql);
 		
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Vaccine(id),true));
 		
@@ -143,9 +150,11 @@ public class VaccineDaoImpl implements VaccineDao {
 		+"    t_vaccine.pr_id,"
 		+"    t_vaccine.va_date,"
 		+"    t_vaccine.va_name,"
-		+"    t_vaccine.va_batch"
-		+" from t_vaccine, t_animal where "
-		+" t_animal.an_id = t_vaccine.an_id "
+		+"    t_vaccine.va_batch,"
+		+"    t_person.pr_lastname"
+		+" from t_vaccine, t_animal ,t_person where "
+		+" t_animal.an_id = t_vaccine.an_id and "
+		+" t_person.pr_id = t_vaccine.pr_id "
 		+ " and t_vaccine.va_id=" +id;
 		
 		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Vaccine(id),true), new VaccineMapper());

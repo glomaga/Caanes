@@ -10,4 +10,5 @@ public interface PersonService {
 	public void updatePerson(Person person);
 	public void deletePerson(int id);
 	public Person findPersonById(int id);
+	public List<Person> listAllDoctor();
 }

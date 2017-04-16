@@ -33,11 +33,10 @@
 			<tr>
 				<td>Doctor: </td>
 				<td style="width: 200px;padding:10px">
-				<f:select path="doctor_id" style="margin:10px">
-						<option value="1">1</option>
-						<option value="0">2</option>
-						<!--<f:options items="${categoryList}" itemValue="id" itemLabel="category_name"/>-->
-	       			</f:select> 
+				<f:select id="doctor_id" path="doctor_id">
+						<option value="-1">Select Doctor</option>
+						<f:options items="${DoctorList}" itemValue="id" itemLabel="lastName"/>
+       			</f:select>
 				</td>	
 			</tr>
 			<tr>
@@ -61,7 +60,7 @@
 				<td>${deworm.animal.getName()}</td>
 				<td>${deworm.date}</td>
 				<td>${deworm.name}</td>
-				<td>${deworm.doctor_id}</td>
+				<td>${deworm.doctor.getLastName()}</td>
 				
 				<td>
 					<spring:url value="/deworm/update?id=${deworm.id}" var="updateDeworm" />

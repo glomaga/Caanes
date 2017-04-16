@@ -27,9 +27,9 @@
 					<td style="width: 355px">
 						<f:select path="implantSite" >
 				        <c:forEach items="${ImplantSiteList}" var="option">
-				                <option value="${option}">
+				        			<option value="${option}" ${option == selectedImplantSite ? 'selected="selected"' : ''}>
 				                    <c:out value="${option}"></c:out>
-				                </option>
+				                	</option>
 				        </c:forEach>
 					</f:select>
 					</td>

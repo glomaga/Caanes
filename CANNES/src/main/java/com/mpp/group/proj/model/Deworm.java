@@ -9,15 +9,16 @@ public class Deworm {
 	private String name;
 	private int doctor_id;
 	private int animal_id;
+	private Person doctor;
 	
 	
-	public Deworm(int id, Animal animal, Date date, String name, int doctor_id) {
+	public Deworm(int id, Animal animal, Date date, String name, Person doctor) {
 		super();
 		this.id = id;
 		this.animal = animal;
 		this.date = date;
 		this.name = name;
-		this.doctor_id = doctor_id;
+		this.doctor = doctor;
 	}
 	public Deworm() {
 		super();
@@ -37,6 +38,7 @@ public class Deworm {
 	}
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
+		this.animal_id=animal.getId();
 	}
 	public Date getDate() {
 		return date;
@@ -66,6 +68,13 @@ public class Deworm {
 	}
 	public void setAnimal_id(int animal_id) {
 		this.animal_id = animal_id;
+	}
+	public Person getDoctor() {
+		return doctor;
+	}
+	public void setDoctor(Person doctor) {
+		this.doctor = doctor;
+		this.doctor_id= doctor.getId();
 	}
 
 	

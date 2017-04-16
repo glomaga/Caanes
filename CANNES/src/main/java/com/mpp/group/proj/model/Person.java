@@ -91,10 +91,13 @@ public class Person {
 		this.title = title;
 	}
 
+	public String getFullName() {
+		return title + " "+ firstName+" "+lastName;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
-
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}

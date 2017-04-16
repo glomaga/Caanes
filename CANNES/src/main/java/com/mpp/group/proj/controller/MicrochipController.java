@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.mpp.group.proj.model.Animal;
 import com.mpp.group.proj.model.ImplantSite;
 import com.mpp.group.proj.model.Microchip;
 import com.mpp.group.proj.service.MicrochipService;
@@ -69,10 +71,13 @@ public class MicrochipController {
 	public String updateMicrochip(ModelMap model, @RequestParam int id) {
 		
 		List<Microchip> list = microchipService.listAllMicrochip();
+		Microchip a = microchipService.findMicrochipById(id);
 		
 		model.addAttribute("microchipForm", microchipService.findMicrochipById(id));
 		model.addAttribute("listMicrochip",list);
 		model.addAttribute("ImplantSiteList", ImplantSite.values());
+		model.addAttribute("selectedImplantSite",a.getImplantSite());
+		
 		return "microchip/microchip";
 	}
 	

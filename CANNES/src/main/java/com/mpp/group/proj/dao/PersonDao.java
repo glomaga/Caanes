@@ -11,4 +11,5 @@ public interface PersonDao {
 	public void updatePerson(Person person);
 	public void deletePerson(int id);
 	public Person findPersonById(int id);
+	public List<Person> listAllDoctor();
 }

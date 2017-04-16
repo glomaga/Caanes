@@ -15,7 +15,11 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.mpp.group.proj.model.Animal;
+import com.mpp.group.proj.model.Breed;
 import com.mpp.group.proj.model.Deworm;
+import com.mpp.group.proj.model.Microchip;
+import com.mpp.group.proj.model.Person;
+import com.mpp.group.proj.model.Specie;
 import com.mpp.group.proj.model.Vaccine;
 
 
@@ -35,18 +39,16 @@ NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
 	private SqlParameterSource getSqlParameterByModel(Deworm Deworm, boolean isById){
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-		System.out.println(Deworm);	 
+ 
 		if(Deworm!=null){
 			paramSource.addValue("de_id", Deworm.getId());
 			if(!isById)
 			{
-			System.out.println("interno");
 			paramSource.addValue("de_id", Deworm.getId());
-			//paramSource.addValue("an_id", vaccine.getAnimal().getId());
-			paramSource.addValue("an_id", Deworm.getAnimal_id());
-		//	paramSource.addValue("an_name", vaccine.getAnimal().getName());
 			paramSource.addValue("de_date", Deworm.getDate());
 			paramSource.addValue("de_name", Deworm.getName());
+			//Associations
+			paramSource.addValue("an_id", Deworm.getAnimal_id());
 			paramSource.addValue("pr_id", Deworm.getDoctor_id());
 		}
 		}
@@ -59,35 +61,38 @@ NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 			
 			Deworm Deworm = new Deworm();
 			Deworm.setId(rs.getInt("de_id"));
-			System.out.println("Animal ID "+ rs.getInt("an_id"));
-			Animal animal= new Animal();
-			
-			animal.setId(rs.getInt("an_id"));
-			animal.setName(rs.getString("an_name"));			
-			Deworm.setAnimal(animal);//animal
-			
-			Deworm.setDoctor_id(rs.getInt("pr_id"));//doctor
-			
 			Deworm.setDate(rs.getDate("de_date"));
 			Deworm.setName(rs.getString("de_name"));
 			
+			//associations
+			Animal animal= new Animal();
+			animal.setId(rs.getInt("an_id"));
+			animal.setName(rs.getString("an_name"));	
+			Deworm.setAnimal(animal);//animal
 			
-			System.out.println(Deworm);
+			Person doctor= new Person();	
+			doctor.setId(rs.getInt("pr_id"));
+			doctor.setLastName(rs.getString("pr_lastname"));
+			Deworm.setDoctor(doctor);//doctor
+
 			return Deworm;
 		}
 	}
 	
 	@Override
 	public List<Deworm> listAllDeworm() {
+	//	System.out.println("Listando");
 		String sql="select "
 		+" t_deworm.de_id,"
 		+"   t_deworm.an_id,"
 		+"	t_animal.an_name,"
 		+"    t_deworm.pr_id,"
 		+"    t_deworm.de_date,"
-		+"    t_deworm.de_name "
-		+" from t_deworm, t_animal where "
-		+" t_animal.an_id = t_deworm.de_id "
+		+"    t_deworm.de_name, "
+		+"    t_person.pr_lastname"
+		+" from t_deworm, t_animal,t_person where "
+		+" t_animal.an_id = t_deworm.an_id and "
+		+" t_person.pr_id = t_deworm.pr_id "
 		+ " order by de_id";
 		List<Deworm> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null,false), new DewormMapper());
 		return list;
@@ -120,7 +125,7 @@ NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	@Override
 	public void deleteDeworm(int id) {
 		String sql = "delete from t_deworm where de_id =:de_id";
-		System.out.println(sql);
+		//System.out.println(sql);
 		
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Deworm(id),true));
 	
@@ -136,9 +141,11 @@ NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 		+"	t_animal.an_name,"
 		+"    t_deworm.pr_id,"
 		+"    t_deworm.de_date,"
-		+"    t_deworm.de_name "
-		+" from t_deworm, t_animal where "
-		+" t_animal.an_id = t_deworm.de_id "
+		+"    t_deworm.de_name, "
+		+"    t_person.pr_lastname"
+		+" from t_deworm, t_animal, t_person where "
+		+" t_animal.an_id = t_deworm.an_id and "
+		+" t_person.pr_id = t_deworm.pr_id "
 		+ " and t_deworm.de_id=" +id;
 	return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Deworm(id),true), new DewormMapper());
 	

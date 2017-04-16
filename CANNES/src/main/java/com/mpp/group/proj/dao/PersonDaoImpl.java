@@ -123,4 +123,12 @@ public class PersonDaoImpl implements PersonDao {
 		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Person(id)), new PersonMapper());
 	}
 
+	@Override
+	public List<Person> listAllDoctor() {
+		String sql="select pr_id, pr_type, pr_title, pr_title, pr_lastname, "+
+				"pr_firstname, pr_gender, pr_status from t_person where  pr_type= 1 order by pr_id";
+		List<Person> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new PersonMapper());
+		return list;
+	}
+
 }

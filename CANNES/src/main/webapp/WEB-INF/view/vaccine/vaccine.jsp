@@ -39,11 +39,10 @@
 			<tr>
 				<td>Doctor: </td>
 				<td style="width: 200px;padding:10px">
-				<f:select path="doctor_id" style="margin:10px">
-						<option value="1">1</option>
-						<option value="0">2</option>
-						<!--<f:options items="${categoryList}" itemValue="id" itemLabel="category_name"/>-->
-	       			</f:select> 
+				<f:select id="doctor_id" path="doctor_id">
+						<option value="-1">Select Doctor</option>
+						<f:options items="${DoctorList}" itemValue="id" itemLabel="lastName"/>
+       			</f:select>
 				</td>	
 			</tr>
 			<tr>
@@ -69,7 +68,7 @@
 				<td>${vaccine.date}</td>
 				<td>${vaccine.name}</td>
 				<td>${vaccine.batch}</td>
-				<td>${vaccine.doctor_id}</td>
+				<td>${vaccine.doctor.getLastName()}</td>
 				
 				<td>
 					<spring:url value="/vaccine/update?id=${vaccine.id}" var="updateVaccine" />
@@ -86,12 +85,12 @@
 <%@ include file="common/footer.jspf"%>
 
 <script>
-$(document).ready(function () {
-    var url = window.location;
-    $('ul.nav > li').removeClass('active');
-    $('ul.nav a[href="'+ url +'"]').parent().addClass('active');
-    $('ul.nav a').filter(function() {
-         return this.href == url;
-    }).parent().addClass('active');
-});
+	$(document).ready(function () {
+	    var url = window.location;
+	    $('ul.nav > li').removeClass('active');
+	    $('ul.nav a[href="'+ url +'"]').parent().addClass('active');
+	    $('ul.nav a').filter(function() {
+	         return this.href == url;
+	    }).parent().addClass('active');
+	});
 </script>

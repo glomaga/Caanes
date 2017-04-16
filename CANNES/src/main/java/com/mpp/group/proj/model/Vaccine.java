@@ -9,6 +9,7 @@ private Animal animal;
 private Date date;
 private String name;
 private String batch;
+private Person doctor;
 private int doctor_id;
 private int animal_id;
 
@@ -23,14 +24,14 @@ public Vaccine(int id) {
 }
 
 
-public Vaccine(int id, Animal animal,Date date, String name, String batch,int doctor_id) {
+public Vaccine(int id, Animal animal,Date date, String name, String batch,Person doctor) {
 	super();
 	this.id=id;
 	this.animal=animal;
 	this.date = date;
 	this.name = name;
 	this.batch = batch;
-	this.doctor_id= doctor_id;
+	this.doctor= doctor;
 }
 
 public Date getDate() {
@@ -81,6 +82,7 @@ public Animal getAnimal() {
 
 public void setAnimal(Animal animal) {
 	this.animal = animal;
+	this.animal_id= animal.getId();
 }
 public int getDoctor_id() {
 	return doctor_id;
@@ -99,5 +101,13 @@ public int getAnimal_id() {
 public void setAnimal_id(int animal_id) {
 	this.animal_id = animal_id;
 }
+public Person getDoctor() {
+	return doctor;
+}
+public void setDoctor(Person doctor) {
+	this.doctor = doctor;
+	this.doctor_id= doctor.getId();
+}
+
 
 }
