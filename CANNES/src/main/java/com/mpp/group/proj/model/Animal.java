@@ -18,8 +18,15 @@ public class Animal {
 	private int specie_id;	
 	private int breed_id;
 	private int microchip_id;
+	private boolean is_deceased;
 		
 	
+	public boolean isIs_deceased() {
+		return is_deceased;
+	}
+	public void setIs_deceased(boolean is_deceased) {
+		this.is_deceased = is_deceased;
+	}
 	public Gender getGender() {
 		return gender;
 	}
@@ -61,6 +68,7 @@ public class Animal {
 	}
 	public void setDeceased(Date deceased) {
 		this.deceased = deceased;
+		this.is_deceased = true;
 	}
 	public boolean isStatus() {
 		return status;

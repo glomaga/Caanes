@@ -41,7 +41,10 @@ public class AnimalDaoImp implements AnimalDao {
 				paramSource.addValue("an_neuter", (animal.isNeutered() ? 1:0));
 				paramSource.addValue("an_birth", animal.getBirth());
 				paramSource.addValue("an_color", animal.getColor());
-				paramSource.addValue("an_deceased", animal.getDeceased());
+				if(animal.isIs_deceased())
+					paramSource.addValue("an_deceased", animal.getDeceased());
+				else
+					paramSource.addValue("an_deceased", null);
 				paramSource.addValue("an_status", (animal.isStatus()?1:0));
 				//Associations
 				paramSource.addValue("sp_id", animal.getSpecie_id());
@@ -83,7 +86,7 @@ public class AnimalDaoImp implements AnimalDao {
 		String sql="select t_animal.*,mr_description,br_description,sp_description from t_animal "
 				+ "inner join t_specie on t_specie.sp_id = t_animal.sp_id "
 				+ "inner join t_breed on t_breed.br_id = t_animal.br_id "
-				+ "inner join t_microchip on t_microchip.mr_id = t_animal.mr_id";
+				+ "inner join t_microchip on t_microchip.mr_id = t_animal.mr_id ORDER BY t_animal.an_id ";
 		List<Animal> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null,false), new AnimalMapper());
 		return list;
 		
