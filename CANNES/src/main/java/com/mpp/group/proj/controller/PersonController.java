@@ -64,6 +64,21 @@ public class PersonController {
 		return "/person/person";
 	}
 	
+	@RequestMapping(value="/person/delete", method=RequestMethod.GET)
+	public String delete(ModelMap model, @RequestParam int id) {
+		
+		personService.deletePerson(id);
+		List<Person> personList = personService.listAllPerson();
+		Person person = new Person();
+		model.addAttribute("personForm", person);
+		model.addAttribute("personType",personTypeList);
+		model.addAttribute("titleList",titleList);
+		model.addAttribute("genderList",genderList);
+		model.addAttribute("personList",personList);
+		model.addAttribute("statusList",activeList);
+		
+		return "/person/person";
+	}
 	
 	@RequestMapping(value="/person", method=RequestMethod.POST)
 	public ModelAndView savePerson(@ModelAttribute("id") Person person){

@@ -110,7 +110,7 @@ public class PersonDaoImpl implements PersonDao {
 
 	@Override
 	public void deletePerson(int id) {
-		String sql = "delete from t_person where pr_id =:id";
+		String sql = "delete from t_person where pr_id =:pr_id";
 		
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(new Person(id)));
 	}
