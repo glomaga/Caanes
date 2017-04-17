@@ -25,7 +25,7 @@
 			<tr>
 				<td>State : </td>
 				<td style="width: 200px;padding:10px">
-					<f:input path="state"  /> 
+					<f:input path="state" maxlength="2" /> 
        			</td>		
 			</tr>
 			<tr>
@@ -46,8 +46,14 @@
 					<f:checkbox path="primary" />
        			</td>		
 			</tr>
-			<tr>		
-					
+			<tr>				
+				<td>Person: </td>
+				<td style="width: 200px;padding:10px">
+				<f:select id="person_id" path="person_id">
+						<option value="-1">Select Person</option>
+						<f:options items="${PersonList}" itemValue="id" itemLabel="lastName"/>
+       			</f:select>
+				</td>				
 			</tr>
 			
 			<tr>
@@ -65,6 +71,7 @@
 			<th>Zip Code</th>
 			<th>Country</th>
 			<th>Is Primary</th>
+			<th>Person</th>
 			<th colspan="2"> Action</th>
 		</tr>
 		<c:forEach items="${listLocation}" var="location">
@@ -76,6 +83,7 @@
 				<td>${location.zipcode}</td>
 				<td>${location.country}</td>
 				<td>${location.primary}</td>
+				<td>${location.person.getLastName()}</td>
 				
 				<td>
 					<spring:url value="/location/update?id=${location.id}" var="updateLocation" />

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.mpp.group.proj.model.*;
 import com.mpp.group.proj.service.LocationService;
+import com.mpp.group.proj.service.PersonService;
 
 @Controller
 @RequestMapping(value="/location")
@@ -19,6 +20,8 @@ public class LocationController {
 	
 	@Autowired
 	LocationService locationService;
+	@Autowired
+	PersonService PersonService; 
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView listLocation(){
@@ -26,8 +29,10 @@ public class LocationController {
 		
 		Location location = new Location();
 		List<Location> list = locationService.listAllLocation();
+		List<Person> persons = PersonService.listAllPerson();
 		model.addObject("locationForm",location);
 		model.addObject("listLocation",list);
+		model.addObject("PersonList",persons);
 				
 		return model;
 	}
@@ -50,8 +55,10 @@ public class LocationController {
 		locationService.deleteLocation(id);
 		Location location = new Location();
 		List<Location> list = locationService.listAllLocation();
+		List<Person> persons = PersonService.listAllPerson();		
 		model.addAttribute("locationForm",location);
 		model.addAttribute("listLocation",list);
+		model.addAttribute("PersonList",persons);
 				
 		return "location/location";
 	}
@@ -60,9 +67,11 @@ public class LocationController {
 	public String updateLocation(ModelMap model, @RequestParam int id) {
 		
 		List<Location> list = locationService.listAllLocation();
+		List<Person> persons = PersonService.listAllPerson();
 		Location l = locationService.findLocationById(id);
 		model.addAttribute("locationForm", l);
 		model.addAttribute("listLocation",list);
+		model.addAttribute("PersonList",persons);
 				
 		return "location/location";
 	}

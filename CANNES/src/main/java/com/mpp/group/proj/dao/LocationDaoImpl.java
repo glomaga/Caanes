@@ -43,6 +43,8 @@ public class LocationDaoImpl implements LocationDao {
 				paramSource.addValue("lc_zipcode", location.getZipcode());
 				paramSource.addValue("lc_country", location.getCountry());
 				paramSource.addValue("ph_primary", (location.isPrimary()?1:0));
+				//Associations
+				paramSource.addValue("pr_id", location.getPerson_id());
 			}
 			
 		}
@@ -61,6 +63,11 @@ public class LocationDaoImpl implements LocationDao {
 			location.setZipcode(rs.getInt("lc_zipcode"));
 			location.setCountry(rs.getString("lc_country"));
 			location.setPrimary(rs.getBoolean("ph_primary"));
+			//associations
+			Person person= new Person();	
+			person.setId(rs.getInt("pr_id"));
+			person.setLastName(rs.getString("pr_lastname"));
+			location.setPerson(person);
 							
 			return location;
 		}
@@ -71,7 +78,8 @@ public class LocationDaoImpl implements LocationDao {
 	@Override
 	public List<Location> listAllLocation() {
 		
-		String sql="SELECT * FROM t_location";
+		String sql="SELECT t_location.*, concat( t_person.pr_firstname, ' ' ,t_person.pr_lastname ) as pr_lastname "
+				+ " FROM t_person inner join t_location on t_person.pr_id = t_location.pr_id";
 		List<Location> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null,false), new LocationMapper());
 		return list;
 		
@@ -81,8 +89,8 @@ public class LocationDaoImpl implements LocationDao {
 	public void addLocation(Location location) {
 		
 		String sql = "insert into t_location(lc_address,lc_city,lc_state,lc_zipcode,lc_country"
-				+ ",ph_primary) values(:lc_address,:lc_city,:lc_state,:lc_zipcode,:lc_country"
-				+ ",:ph_primary)";
+				+ ",ph_primary,pr_id) values(:lc_address,:lc_city,:lc_state,:lc_zipcode,:lc_country"
+				+ ",:ph_primary,:pr_id)";
 						
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(location,false));
 		
@@ -97,6 +105,7 @@ public class LocationDaoImpl implements LocationDao {
 				+ " lc_zipcode =:lc_zipcode,"
 				+ " lc_country =:lc_country,"
 				+ " ph_primary =:ph_primary"
+				+ " pr_id =:pr_id"
 				+ " where lc_id =:lc_id";
 		
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(location,false));
@@ -114,7 +123,9 @@ public class LocationDaoImpl implements LocationDao {
 	@Override
 	public Location findLocationById(int id) {
 		
-		String sql="select * from t_location where lc_id =" +id ;
+		String sql= "SELECT t_location.*, concat( t_person.pr_firstname, ' ' ,t_person.pr_lastname ) as pr_lastname "
+				+ " FROM t_person inner join t_location on t_person.pr_id = t_location.pr_id"
+				+ " where lc_id =" +id ;
 		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Location(id),true), new LocationMapper());
 	}
 

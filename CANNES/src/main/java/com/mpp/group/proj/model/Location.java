@@ -9,6 +9,23 @@ public class Location {
 	private int zipcode;
 	private String country;
 	private boolean primary;
+	private Person person;
+	private int person_id;
+	
+	public Person getPerson() {
+		return person;
+	}
+	public void setPerson(Person person) {
+		this.person = person;
+		this.person_id=person.getId();
+	}
+	public int getPerson_id() {
+		return person_id;
+	}
+	public void setPerson_id(int person_id) {
+		this.person_id = person_id;
+	}	
+	
 	public int getId() {
 		return id;
 	}
