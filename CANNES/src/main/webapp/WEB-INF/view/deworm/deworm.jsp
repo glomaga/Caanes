@@ -51,7 +51,7 @@
 			<th>Animal</th>
 			<th>Date</th>
 			<th>Name Deworm</th>
-			<th>Doctor ID</th>
+			<th>Doctor</th>
 			<th colspan="2"> Action</th>
 		</tr>
 		<c:forEach items="${listdeworm}" var="deworm">

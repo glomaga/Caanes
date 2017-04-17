@@ -58,7 +58,7 @@
 			<th>Date</th>
 			<th>Name Vaccine</th>
 			<th>Batch</th>
-			<th>Doctor ID</th>
+			<th>Doctor</th>
 			<th colspan="2"> Action</th>
 		</tr>
 		<c:forEach items="${listvaccine}" var="vaccine">

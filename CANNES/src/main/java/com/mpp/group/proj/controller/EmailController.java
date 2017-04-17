@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.mpp.group.proj.model.Email;
+import com.mpp.group.proj.model.Person;
 import com.mpp.group.proj.service.EmailService;
+import com.mpp.group.proj.service.PersonService;
 
 @Controller
 @RequestMapping(value="/email")
@@ -20,14 +22,20 @@ public class EmailController {
 	@Autowired
 	EmailService EmailService;
 	
+	@Autowired
+	PersonService PersonService; 
+	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView listEmail(){
 		ModelAndView model = new ModelAndView("email/email");
 		
 		Email Email = new Email();
 		List<Email> list = EmailService.listAllEmail();
+		List<Person> persons = PersonService.listAllPerson();
+		
 		model.addObject("EmailForm",Email);
 		model.addObject("listEmail",list);
+		model.addObject("PersonList",persons);
 				
 		return model;
 	}
@@ -60,10 +68,13 @@ public class EmailController {
 	public String updateEmail(ModelMap model, @RequestParam int id) {
 		
 		List<Email> list = EmailService.listAllEmail();
+		List<Person> persons = PersonService.listAllPerson();
+		
 		Email a = EmailService.findEmailById(id);
 		model.addAttribute("EmailForm", a);
 		model.addAttribute("listEmail",list);
-				
+		model.addAttribute("PersonList",persons);
+		
 		return "email/email";
 	}
 

@@ -39,7 +39,9 @@ public class EmailDaoImpl implements EmailDao {
 			if(!isById)
 			{
 				paramSource.addValue("em_email", email.getEmail());				
-				paramSource.addValue("ph_primary", (email.isPrimary()? 1:0));				
+				paramSource.addValue("ph_primary", (email.isPrimary()? 1:0));
+				//Associations
+				paramSource.addValue("pr_id", email.getPerson_id());
 			}
 			
 		}
@@ -54,6 +56,12 @@ public class EmailDaoImpl implements EmailDao {
 			email.setId(rs.getInt("em_id"));
 			email.setEmail(rs.getString("em_email"));
 			email.setPrimary(rs.getBoolean("ph_primary"));
+			
+			//associations
+			Person person= new Person();	
+			person.setId(rs.getInt("pr_id"));
+			person.setLastName(rs.getString("pr_lastname"));
+			email.setPerson(person);//person
 							
 			return email;
 		}
@@ -61,21 +69,27 @@ public class EmailDaoImpl implements EmailDao {
 
 	@Override
 	public List<Email> listAllEmail() {
-		String sql="SELECT * FROM t_email";
+		//String sql="SELECT * FROM t_email";
+		String sql="SELECT t_email.em_id, t_email.pr_id, t_email.em_email,t_email.ph_primary, t_person.pr_lastname "
+		+" FROM t_email,t_person where "
+		+" t_person.pr_id = t_email.pr_id "		
+		+ " order by t_email.em_id";
+		
 		List<Email> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null,false), new EmailMapper());
 		return list;
 	}
 
 	@Override
 	public void addEmail(Email email) {		
-		String sql = "insert into t_email(em_email,ph_primary) values(:em_email,:ph_primary)";						
+		String sql = "insert into t_email(em_email,pr_id,ph_primary) values(:em_email,:pr_id,:ph_primary)";						
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(email,false));		
 	}
 
 	@Override
 	public void updateEmail(Email email) {		
 		String sql = "update t_email set em_email =:em_email,"
-				+ " ph_primary =:ph_primary"
+				+ " ph_primary =:ph_primary,"
+				+ " pr_id =:pr_id "
 				+ " where em_id =:em_id";
 		
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(email,false));		
@@ -89,7 +103,11 @@ public class EmailDaoImpl implements EmailDao {
 
 	@Override
 	public Email findEmailById(int id) {		
-		String sql="select * from t_email where em_id =" +id ;
+		//String sql="select * from t_email where em_id =" +id ;
+		String sql="SELECT t_email.em_id, t_email.pr_id, t_email.em_email,t_email.ph_primary, t_person.pr_lastname  "
+		+" FROM t_email,t_person where "
+		+" t_person.pr_id = t_email.pr_id "		
+		+ " and t_email.em_id=" +id;
 		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(new Email(id),true), new EmailMapper());		
 	}
 

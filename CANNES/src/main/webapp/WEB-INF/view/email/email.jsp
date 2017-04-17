@@ -9,6 +9,15 @@
 	<form:form modelAttribute="EmailForm" method="POST" action="${saveEmail}">
 		<f:hidden path="id" />
 		<table>
+				<tr>
+				<td>Person: </td>
+				<td style="width: 200px;padding:10px">
+				<f:select id="person_id" path="person_id">
+						<option value="-1">Select Person</option>
+						<f:options items="${PersonList}" itemValue="id" itemLabel="lastName"/>
+       			</f:select>
+				</td>	
+			</tr>
 			<tr>
 				<td>Email Name : </td>
 				<td style="width: 200px;padding:10px">
@@ -33,6 +42,7 @@
 	<table class="table table-striped">
 		<tr>
 			<th>ID</th>
+			<th>Person</th>
 			<th>Email Name</th>
 			<th>Is Primary</th>
 			
@@ -41,6 +51,7 @@
 		<c:forEach items="${listEmail}" var="Email">
 			<tr>
 				<td>${Email.id}</td>
+				<td>${Email.person.getLastName()}</td>
 				<td>${Email.email}</td>
 				<td>${Email.primary}</td>
 								
